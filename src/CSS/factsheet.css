@@ -1,0 +1,26 @@
+.titulos{
+  color: #B4A76A;
+  font-family: 'Belleza';
+  border-bottom: 3px solid #6F8854;
+  width: fit-content;
+  margin: 0 auto;
+}
+.textFactsheet{
+    width: 50%;
+    margin: 20px auto;
+    font-family: 'Belleza';
+}
+.factsheetimg{
+    width: 100%;
+    height: 600px;
+}
+.texto-na-imagen{
+   color: white;
+   position: absolute;
+   text-align: center; 
+   font-size: 80px; 
+   top: 50%;
+   left: 50%;
+   font-family: 'Belleza';
+   transform: translate(-50%, -50%);
+ }

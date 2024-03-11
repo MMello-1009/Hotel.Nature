@@ -1,0 +1,41 @@
+.restaurante {
+    h4{
+        text-align: center;
+    }
+    .head-text {
+        position: relative;
+    }
+    .text-on-image {
+        background-color: rgba(247, 233, 233, 0.349);
+        color: black;
+        position: absolute;
+        text-align: center;
+        top: 90%;
+        left: 10%;
+        font-family: 'Belleza';
+        transform: translate(-50%, -50%);
+    }
+    .restaurante-img {
+        width: 100%;
+        height: 600px;
+    }
+    .imghotel-bar {
+        object-fit: cover;
+        width: 50%;
+        height: 55vh;
+         
+      }
+    .descquartos { 
+        font-family: 'Belleza';
+        font-size: large;
+        text-align: left;
+      }
+    .tablerest {
+        margin-bottom: .1vh;
+        td {
+          border: none;
+          padding: 5%;
+          background-color: rgba(189, 185, 185, 0.555); 
+        }
+      }
+}

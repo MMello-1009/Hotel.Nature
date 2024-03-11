@@ -1,0 +1,94 @@
+ 
+  /* Navbar */
+  .navbar {
+    background-color: #fff;
+    height: 120px;
+    display: flex;
+    align-items: center;
+    
+    border-bottom: 3px solid #6F8854;
+    width: 100%;
+  
+  }
+  
+  /* Logo */
+  .nav-logo {
+    margin-right: 20px;
+    margin: 10px;
+    margin-left: 2px;
+  
+  }
+  
+  .nav-logo img {
+    width: 150px;
+    
+  }
+  
+  /* Menu */
+  .nav-links {
+    list-style: none;
+    display: flex;
+    align-items: center;
+    margin: 0;
+  }
+  
+  .nav-item {
+    margin-right: 50px;
+    
+  }
+  
+  .nav-link {
+    text-decoration: none;
+    color: #000;
+    font-size: 16px;
+    font-weight: 500;
+    font-family: 'Belleza';
+    transition: 0.3s;
+  }
+  
+  .nav-link:hover {
+    color: #006600;
+  }
+  
+  /* Botão "Reserve já" */
+  .nav-button {
+    
+    background-color: #6F8854;
+    color: white;
+    padding: 10px 20px;
+    font-size: 20px;
+    font-weight: 500;
+    transition: 0.3s;
+    margin-left: 180px;
+    font-family: 'Belleza';
+    border:none;
+    text-decoration: none;
+  }
+  
+  .nav-button:hover {
+    background-color: #6f8854c4;
+  }
+  
+  /* Media queries */
+  
+  @media (max-width: 701px) {
+    .navbar {
+      text-align: center;
+      display: flex;
+      width: 100%;
+    }
+  
+    .nav-links {
+      display: inline-block;
+      align-items: center;
+    }
+  
+    .nav-item {
+      margin-bottom: 10px;
+    }
+  
+    .nav-button {
+      margin: 0 auto;
+      
+    }
+  }
