@@ -1,6 +1,45 @@
-.programas-titulo{
-  color: #6F8854;
-  font-family: 'Belleza';  
-  width: fit-content;
-  text-align: left;
+.programas{
+  .programas-titulo{
+    color: #6F8854;
+    font-family: 'Belleza';  
+    width: fit-content;
+    text-align: left;
+  }
+  .primeira-imagem{
+    float: left;
+    width: 33.33%;
+    padding: 5px;
+    height: 50vh;
+    object-fit: cover;
+  }
+  .segunda-imagem{
+    float: left;
+    width: 33.33%;
+    padding: 5px;
+    height: 50vh;
+    object-fit: cover;
+  }
+  .sobre-atividade{
+    color: #6F8854;
+    font-family: 'Belleza'; 
+  }
+  .subtitulos{
+    text-align: left;
+    color: #6F8854;
+    font-family: 'Belleza'; 
+  }
+  .texto{
+    font-family: 'Belleza';
+    text-align: left;
+    width: 66.66%;
+  }
+  .programas-botao{
+    background-color: #6F8854;
+    color: white;
+    padding: 5px 20px;
+    font-size: 15px;
+    transition: 0.3s;
+    font-family: 'Belleza';
+    border:none;
+  }
 }
