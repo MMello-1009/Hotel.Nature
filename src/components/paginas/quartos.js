@@ -1,19 +1,25 @@
-import React,{useState} from "react";
-import '../../CSS/quartos.css';
-import{Link} from 'react-router-dom';
-import Popup from 'reactjs-popup';
-import 'reactjs-popup/dist/index.css';
+import React, { useState } from "react";
+import "../../CSS/quartos.css";
+import { Link } from "react-router-dom";
+import Popup from "reactjs-popup";
+import "reactjs-popup/dist/index.css";
 
+function Quartos() {
+  const [popupOpen, setPopupOpen] = useState(false);
 
-function Quartos(){
-  function ConstantPopup() {
+  const ConstantPopup = () => {
     return (
       <div>
-        <h2>Conteúdo do popup aqui !!</h2>
-        <p>Você pode adicionar qualquer tipo de conteúdo aqui, como texto, imagens ou formulários.</p>
+        <p>Conteúdo do Popup</p>
+        {/* Adicione aqui o conteúdo do seu popup */}
+        <button onClick={() => setPopupOpen(false)}>Fechar Popup</button>
       </div>
     );
-  }
+  };
+
+  const openPopup = () => {
+    setPopupOpen(true);
+  };
     return(
         <div>
           <p className="pagetitle">Quartos</p>
@@ -36,7 +42,22 @@ function Quartos(){
                <li> Internet Wi-Fi</li>
                </p>
             <div className="card-buttons">
-            <button onClick={ConstantPopup} className="button1">Ver mais</button>
+            <button onClick={openPopup} className="button1">Ver mais</button>
+            {/* Popup */}
+      <Popup
+        open={popupOpen}
+        onClose={() => setPopupOpen(false)}
+        closeOnDocumentClick
+        closeOnEscape
+        position="center center"
+        contentStyle={{
+          padding: 20,
+          border: "1px solid #ccc",
+          borderRadius: 5,
+        }}
+      >
+        {ConstantPopup()}
+      </Popup>
               <Link to="/" className="button2">Reservar</Link>
             </div>
           </div>
@@ -155,7 +176,7 @@ comodidades.
           borderRadius: 5,
         }}
       >
-        {ConstantPopup()}
+        
       </Popup>
 
        </div>

@@ -16,11 +16,9 @@ function Restaurante() {
         </div>
       </div>
       <table cellSpacing="50px" className='tablerest'>
-        <tr className='bordas'>
-          <div className='descquartos1'>
-            <td><img className='imghotel-bar' src='../Imagens/IMGRESTAURANTE/hotel-in-geres-restaurant-new04.jpg' /><h4>Restaurante</h4><br></br></td>
-          </div>
-          <div className='descquartos2'>
+        <tr>
+          <div className='descquartos'>
+            <td><img className='imghotel-bar' src='../Imagens/IMGRESTAURANTE/hotel-in-geres-restaurant-new04.jpg' /><h4>Restaurante</h4></td>
             <td><img className='imghotel-bar' src='../Imagens/IMGBAR/poolbar2.jpg' /><h4>Bar</h4><br></br></td>
           </div>
         </tr>
