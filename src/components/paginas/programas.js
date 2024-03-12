@@ -6,7 +6,7 @@ function Programas() {
     <div>
       <br></br><br></br>
       <h1 className="programas-titulo">Canyoning</h1>
-      <img src="../Imagens/Programas/canyoning_geres.jpg"</img>
+      <img src="../Imagens/Programas/canyoning_geres.jpg"></img>
     </div>
 
   );
