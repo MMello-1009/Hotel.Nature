@@ -25,6 +25,7 @@ function App() {
           <Route path="/programas" element={<Programas />} />
           <Route path="/contactos" element={<Contactos />} />
           <Route path="/geres" element={<Geres />} />
+          <Route path="/reserva" element={<Reservas />} />
         </Routes>
       </Master>
     </Router>

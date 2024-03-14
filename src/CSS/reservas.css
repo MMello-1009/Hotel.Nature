@@ -2,4 +2,19 @@
     .disponibilidade{
         background-color: #B4A76A;
     }
+    p{
+        text-align: left;
+        font-family: 'belleza';
+        color: white;
+        
+    }
+    .checkin{
+       
+        padding: 5%;
+    }
+    .botao-disponibilidade{
+        
+    }
+      
+     
 }

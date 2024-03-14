@@ -47,9 +47,19 @@
     text-align: left; /* Aligns all text inside .card-content to the left */
     margin-left: 5%;
   }
-  .roomtitle{
+  .roomtitle p{
     font-size: 40px;
     color: #6F8854;
+    text-align: left;
+    margin-left: 10px;
+    font-family: 'Belleza';
+  }
+  .roomtitle {
+    font-size: 40px;
+    color: #6F8854;
+    text-align: left;
+    margin-left: 10px;
+    font-family: 'Belleza';
   }
   .card-buttons {
     display: flex;
@@ -96,7 +106,6 @@
   margin-right: 1%;
 }
 .popup td{
-  
   text-align: left;
   font-family: 'Belleza';
   font-size: 112%;
@@ -119,11 +128,30 @@
   width: 100%;
 }
 .each-slide-effect > div {
-  margin-left: 10%;
-  margin-right: 10%;
   display: flex;
   align-items: center;
   justify-content: center;
   background-size: cover;
-  height: 500px;
+  height: 350px;
 }
+
+.slideshow {
+  width: 62.5%;
+  height: 100%;
+  display:inline-flex;
+  
+}
+.close-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
+  font-size: 20px;
+  color: #333;
+  width: 25px;
+}
+
+
+
+
+
