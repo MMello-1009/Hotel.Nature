@@ -36,10 +36,6 @@ function Programas() {
 
 
       <br></br><br></br>
-<<<<<<< HEAD
-      <h1 className="programas-titulo">Canyoning</h1>
-      <img src="../Imagens/Programas/canyoning_geres.jpg"></img>
-=======
       <h1 className="programas-titulo">Passeios de Jipe</h1><br></br>
       <img className="primeira-imagem" src="../Imagens/Programas/Jipe.jpg"></img>
       <img className="segunda-imagem" src="../Imagens/Programas/7lagoas_jipe.png"></img>
@@ -93,7 +89,6 @@ function Programas() {
       <p className="texto">Segunda a Domingo: 10h00 - 21h00</p>
       <p className="subtitulos">Reservas através de:</p>
       <p className="texto">hotel@real.natura.pt ou Tlf: +351 253 682 396</p>
->>>>>>> e1fff71305494df983236a9d0ceecf3fef6e07d8
     </div>
 
   );

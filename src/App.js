@@ -7,6 +7,7 @@ import Geres from './components/paginas/geres';
 import FactSheet from './components/paginas/factsheet';
 import Programas from './components/paginas/programas';
 import Contactos from './components/paginas/contactos';
+import Reservas from './components/paginas/reservas';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Master from './components/MasterLayouts';
 

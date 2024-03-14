@@ -4,12 +4,10 @@ import '../../CSS/reservas.css';
 function Reservas() {
     return (
         <div className="reservas">
-            <div className="disponibilidade">
-                
-                    <p>aaaaaaaaaaaaa</p>
-                    <input type="label">Check in</input>
-                
-            </div>
+                <div className="disponibilidade">
+                    <h4>dasdasda</h4>
+                    <input type="text">Check in</input>
+                </div>
         </div>
     );
 }
