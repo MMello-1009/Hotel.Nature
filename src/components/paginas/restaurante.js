@@ -1,12 +1,10 @@
 import React, { useState } from 'react';
-import 'react-slideshow-image/dist/styles.css'
-import { Slide } from 'react-slideshow-image';
 import '../../CSS/restaurante.css';
+import { Slide } from 'react-slideshow-image';
+import 'react-slideshow-image/dist/styles.css';
 
 
 function Restaurante() {
-
-
 
   const [isFlipped1, setIsFlipped1] = useState(false);
   const [isFlipped2, setIsFlipped2] = useState(false);
@@ -90,21 +88,26 @@ function Restaurante() {
       </table>
       <h2 className='titulos'>Conheça a nossa Equipa!</h2>
       <br></br><br></br>
-      <h3 className='chefstitulo'>Chefs do Restaurante Real</h3>
+      <h3 className='chefstitulogeral'>Chefs do Restaurante Real</h3>
       <br></br>
-      <h4 className='chefstitulo'>Pedro Pena Bastos</h4>
+
+
+      <br></br><br></br>
       <div className='chef-container'>
         <div className='chef-content esquerda'>
-          <a>Na sua cozinha aberta, o Chef pretende trazer "mais alegria e alma" à oferta do REAL do que é habitual na alta cozinha. Trabalha com pequenos fornecedores locais para conseguir ingredientes de excelente sabor e condição e colhe outros, como musgo de rena estaladiço, carne marmoreada de porco preto do Alentejo e "o melhor grão-de-bico que conseguimos encontrar" diretamente da natureza. No seu menu destaca-se cerca de uma dezena de pratos em simultâneo, que mudam consoante a estação, e tenta trabalhar com apenas dois ou três ingredientes "uma faca bem afiada" de cada vez, para melhor garantir que os hóspedes    saboreiam a comida tal como deve ser saboreada.
+
+          <h4 className='chefstitulo'>Pedro Pena Bastos</h4>
+          <a className='chef-text'>Na sua cozinha aberta, o Chef pretende trazer "mais alegria e alma" à oferta do REAL do que é habitual na alta cozinha. Trabalha com pequenos fornecedores locais para conseguir ingredientes de excelente sabor e condição e colhe outros, como musgo de rena estaladiço, carne marmoreada de porco preto do Alentejo e "o melhor grão-de-bico que conseguimos encontrar" diretamente da natureza. No seu menu destaca-se cerca de uma dezena de pratos em simultâneo, que mudam consoante a estação, e tenta trabalhar com apenas dois ou três ingredientes "uma faca bem afiada" de cada vez, para melhor garantir que os hóspedes    saboreiam a comida tal como deve ser saboreada.
             “Ponderamos tudo cuidadosamente para mantermos o foco na comida. É  essa a nossa inspiração, o ponto principal de tudo o que fazemos.”
           </a>
         </div>
         <div className='chef-content direita'>
           <img className='imgchef' src='../Imagens/IMGRESTAURANTE/chef1.png'></img>
         </div>
-      </div>
 
+      </div>
     </div>
   );
 }
 export default Restaurante;
+
