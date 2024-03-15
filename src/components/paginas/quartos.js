@@ -43,10 +43,10 @@ function Quartos() {
               </Slide>
               </td>
               <td>
-                <br></br>
+                
       
                 <div><img src="..\Imagens\infoquartosicon\house-blank.svg" className="icons" alt="Icon"></img>Suite Privada</div>
-                <div><img src="..\Imagens\infoquartosicon\ruler-combined.svg" className="icons" alt="Icon"></img>50m2</div>
+                <div><img src="..\Imagens\infoquartosicon\ruler-combined.svg" className="icons" alt="Icon"></img>50m²</div>
                 <div><img src="..\Imagens\infoquartosicon\umbrella-beach.svg" className="icons" alt="Icon"></img>Varanda</div>
                 <div><img src="..\Imagens\infoquartosicon\mountain.svg" className="icons" alt="Icon"></img>Vista para montanha</div>
                 <div><img src="..\Imagens\infoquartosicon\air-conditioner.svg" className="icons" alt="Icon"></img>Ar Condicionado</div>
@@ -110,10 +110,10 @@ function Quartos() {
               </Slide>
               </td>
               <td>
-                <br></br>
+                
       
                 <div><img src="..\Imagens\infoquartosicon\house-blank.svg" className="icons"></img>Quarto Duplo</div>
-            <div><img src="..\Imagens\infoquartosicon\ruler-combined.svg" className="icons"></img>14m2 </div>
+            <div><img src="..\Imagens\infoquartosicon\ruler-combined.svg" className="icons"></img>14m² </div>
             <div><img src="..\Imagens\infoquartosicon\umbrella-beach.svg" className="icons"></img>Varanda </div>
             <div><img src="..\Imagens\infoquartosicon\mountain.svg" className="icons"></img>Vista para montanha </div>
             <div><img src="..\Imagens\infoquartosicon\air-conditioner.svg" className="icons"></img>Ar Condicionado </div>
@@ -177,10 +177,10 @@ function Quartos() {
               </Slide>
               </td>
               <td>
-                <br></br>
+                
       
                 <div><img src="..\Imagens\infoquartosicon\house-blank.svg" className="icons"></img>Quarto Twin</div>
-            <div><img src="..\Imagens\infoquartosicon\ruler-combined.svg" className="icons"></img>50m2 </div>
+            <div><img src="..\Imagens\infoquartosicon\ruler-combined.svg" className="icons"></img>14m² </div>
             <div><img src="..\Imagens\infoquartosicon\umbrella-beach.svg" className="icons"></img>Varanda </div>
             <div><img src="..\Imagens\infoquartosicon\mountain.svg" className="icons"></img>Vista para montanha </div>
             <div><img src="..\Imagens\infoquartosicon\air-conditioner.svg" className="icons"></img>Ar Condicionado </div>
@@ -244,10 +244,10 @@ function Quartos() {
               </Slide>
               </td>
               <td>
-                <br></br>
+                
       
-                <div><img src="..\Imagens\infoquartosicon\house-blank.svg" className="icons"></img>Suite Privada </div>
-            <div><img src="..\Imagens\infoquartosicon\ruler-combined.svg" className="icons"></img>50m2 </div>
+                <div><img src="..\Imagens\infoquartosicon\house-blank.svg" className="icons"></img>Suite Familiar </div>
+            <div><img src="..\Imagens\infoquartosicon\ruler-combined.svg" className="icons"></img>25m² + 15m² </div>
             <div><img src="..\Imagens\infoquartosicon\umbrella-beach.svg" className="icons"></img>Varanda </div>
             <div><img src="..\Imagens\infoquartosicon\mountain.svg" className="icons"></img>Vista para montanha </div>
             <div><img src="..\Imagens\infoquartosicon\air-conditioner.svg" className="icons"></img>Ar Condicionado </div>
@@ -311,10 +311,10 @@ function Quartos() {
               </Slide>
               </td>
               <td>
-                <br></br>
+                
       
                 <div><img src="..\Imagens\infoquartosicon\house-blank.svg" className="icons"></img>Quarto de Solteiro </div>
-            <div><img src="..\Imagens\infoquartosicon\ruler-combined.svg" className="icons"></img>12m2 </div>
+            <div><img src="..\Imagens\infoquartosicon\ruler-combined.svg" className="icons"></img>12m² </div>
             <div><img src="..\Imagens\infoquartosicon\umbrella-beach.svg" className="icons"></img>Varanda </div>
             <div><img src="..\Imagens\infoquartosicon\mountain.svg" className="icons"></img>Vista para montanha </div>
             <div><img src="..\Imagens\infoquartosicon\air-conditioner.svg" className="icons"></img>Ar Condicionado </div>
@@ -390,7 +390,7 @@ function Quartos() {
             contentStyle={{
               display:'block',
               padding: 5 ,
-              width:'60%',
+              width:'65%',
               height:'fit-content',
               border: "1px solid #ccc",
               borderRadius: 5,
@@ -398,7 +398,7 @@ function Quartos() {
           >
             {SuitePopUp()}
           </Popup>
-              <Link to="/" className="button2">Reservar</Link>
+              <Link to="/reserva" className="button2">Reservar</Link>
             </div>
           </div>
 
@@ -413,7 +413,7 @@ function Quartos() {
                e pela sua varanda individual com
                 vistas deslumbrantes.
               
-               <li>Área de quarto: 30m²</li>
+               <li>Área de quarto: 14m²</li>
                <li>Capacidade: 2 Pessoas</li>
                <li> Ar condicionado</li>
                <li> Pequeno-Almoço incluído</li>
@@ -435,7 +435,7 @@ function Quartos() {
             contentStyle={{
               display:'block',
               padding: 5 ,
-              width:'60%',
+              width:'65%',
               height:'fit-content',
               border: "1px solid #ccc",
               borderRadius: 5,
@@ -443,7 +443,7 @@ function Quartos() {
           >
             {QuartDuploPopUp()}
           </Popup>
-              <Link to="/" className="button2">Reservar</Link>
+              <Link to="/reserva" className="button2">Reservar</Link>
             </div>
           </div>
 
@@ -481,7 +481,7 @@ function Quartos() {
             contentStyle={{
               display:'block',
               padding: 5 ,
-              width:'60%',
+              width:'65%',
               height:'fit-content',
               border: "1px solid #ccc",
               borderRadius: 5,
@@ -489,7 +489,7 @@ function Quartos() {
           >
             {QuartoTwinPopUp()}
           </Popup>
-              <Link to="/" className="button2">Reservar</Link>
+              <Link to="/reserva" className="button2">Reservar</Link>
             </div>
           </div>
 
@@ -526,7 +526,7 @@ function Quartos() {
             contentStyle={{
               display:'block',
               padding: 5 ,
-              width:'60%',
+              width:'65%',
               height:'fit-content',
               border: "1px solid #ccc",
               borderRadius: 5,
@@ -534,7 +534,7 @@ function Quartos() {
           >
             {SuiteFamiliarPopUp()}
           </Popup>
-              <Link to="/" className="button2">Reservar</Link>
+              <Link to="/reserva" className="button2">Reservar</Link>
             </div>
           </div>
 
@@ -550,7 +550,7 @@ function Quartos() {
 Este é um espaço único, pois associa materiais clássicos ao toque de contemporaneidade que se reflecte através das suas 
 comodidades.
               
-               <li>Área de quarto: 18m²</li>
+               <li>Área de quarto: 12m²</li>
                <li>Capacidade: 1 Pessoas</li>
                <li> Ar condicionado</li>
                <li> Pequeno-Almoço incluído</li>
@@ -572,7 +572,7 @@ comodidades.
             contentStyle={{
               display:'block',
               padding: 5 ,
-              width:'60%',
+              width:'65%',
               height:'fit-content',
               border: "1px solid #ccc",
               borderRadius: 5,
@@ -580,7 +580,7 @@ comodidades.
           >
             {QuartoSolteiroPopUp()}
           </Popup>
-              <Link to="/" className="button2">Reservar</Link>
+              <Link to="/reserva" className="button2">Reservar</Link>
             </div>
           </div>
 

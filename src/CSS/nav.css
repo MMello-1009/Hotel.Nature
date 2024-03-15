@@ -1,94 +1,116 @@
- 
-  /* Navbar */
-  .navbar {
-    background-color: #fff;
-    height: 120px;
-    display: flex;
-    align-items: center;
-    
-    border-bottom: 3px solid #6F8854;
-    width: 100%;
-  
-  }
-  
-  /* Logo */
-  .nav-logo {
-    margin-right: 20px;
-    margin: 10px;
-    margin-left: 2px;
-  
-  }
-  
-  .nav-logo img {
-    width: 150px;
-    
-  }
-  
-  /* Menu */
+/* Navbar */
+.navbar {
+  background-color: #fff;
+  height: 120px;
+  display: flex;
+  align-items: center;
+  border-bottom: 3px solid #6F8854;
+  width: 100%;
+}
+
+/* Logo */
+.nav-logo {
+  margin-right: 20px;
+  margin: 10px;
+}
+
+.nav-logo img {
+  width: 150px;
+}
+
+/* Menu */
+.nav-links {
+  list-style: none;
+  display: flex;
+  align-items: center;
+  margin: 0;
+  width: 100%; /* Initial width set to 100% */
+}
+
+.nav-item {
+  margin-left: 3%; /* Adjust spacing as needed */
+}
+
+.nav-link {
+  text-decoration: none;
+  color: #000;
+  font-size: 16px;
+  font-family: 'Belleza';
+  transition: 0.3s;
+  width: 100%; /* Allow content to define width */
+}
+
+/* Responsive Menu Links */
+@media (max-width: 800px) {
   .nav-links {
-    list-style: none;
-    display: flex;
-    align-items: center;
-    margin: 0;
+    display: none; /* Initially hide menu links on smaller screens */
+    margin: 2%;
+    margin-left: 20%;
+    margin-top: 15%;
+  }
+
+  .nav-links.active { /* Show links when menu button is clicked */
+    display: block;
+    flex-direction: column; /* Stack links vertically */
+   position: absolute;
+    top: 0; /* Position menu at the top */
+    left: 0; /* Position menu at the left */
+    width: fit-content; /* Make menu full width */
+    height: fit-content; /* Make menu take up full viewport height */
+    background-color: #fff; /* Set a background color */
+    z-index: 1; /* Ensure menu is above other content */
+    margin-bottom: 2%;
+    padding: 10px;
+  }
+  .nav-button{
+    margin-bottom: 4%;
   }
   
-  .nav-item {
-    margin-right: 50px;
-    
+}
+
+.nav-link:hover {
+  color: #006600;
+}
+
+/* Button "Reserve já" */
+.nav-button {
+  background-color: #6F8854;
+  color: white;
+  padding: 10px 20px;
+  font-size: 20px;
+  transition: 0.3s;
+  margin-left: auto;
+  font-family: 'Belleza';
+  border: none;
+  text-decoration: none;
+  width: 130px; /* Maintain original width */
+  margin-left: 0 auto;
+}
+
+.nav-button:hover {
+  background-color: #6f8854c4;
+}
+
+.iconnav {
+  width: 24px;
+}
+
+/* Responsive Button & Menu Toggle */
+.menu-toggle {
+  display: none; /* Initially hidden on larger screens */
+  margin-left: 10px; /* Adjust spacing as needed */
+  left: 30%;
+  border: none;
+  background-color: #fff;
+  cursor: pointer;
+
+
+  @media (max-width: 800px) {
+    display: block; /* Show button on screens less than 800px */
   }
+}
+
+.nav-links.active {
+  display: flex; /* Show menu when button is clicked */
   
-  .nav-link {
-    text-decoration: none;
-    color: #000;
-    font-size: 16px;
-    font-weight: 500;
-    font-family: 'Belleza';
-    transition: 0.3s;
-  }
-  
-  .nav-link:hover {
-    color: #006600;
-  }
-  
-  /* Botão "Reserve já" */
-  .nav-button {
-    
-    background-color: #6F8854;
-    color: white;
-    padding: 10px 20px;
-    font-size: 20px;
-    font-weight: 500;
-    transition: 0.3s;
-    margin-left: 180px;
-    font-family: 'Belleza';
-    border:none;
-    text-decoration: none;
-  }
-  
-  .nav-button:hover {
-    background-color: #6f8854c4;
-  }
-  
-  /* Media queries */
-  
-  @media (max-width: 701px) {
-    .navbar {
-      text-align: center;
-      display: flex;
-      width: 100%;
-    }
-  
-    .nav-links {
-      display: inline-block;
-      align-items: center;
-    }
-  
-    .nav-item {
-      margin-bottom: 10px;
-    }
-  
-    .nav-button {
-      margin: 0 auto;
-      
-    }
-  }
+}

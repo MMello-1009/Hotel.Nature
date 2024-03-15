@@ -61,17 +61,19 @@
     margin-left: 10px;
     font-family: 'Belleza';
   }
+
+  /* DIV com os botões */
   .card-buttons {
     display: flex;
-    /* Styles for the buttons */
   }
   
- 
+ /* Imagens do Cartão dos Quartos */
   .card-image img {
     width: 100%; /* Ensures image doesn't exceed container width */
     height: auto; /* Maintains image aspect ratio */
     object-fit: cover;
   }
+   /* Estilo Botão 1 */
   .button1{
     background-color: rgba(102, 133, 69, 0.769);
     padding: 20px ;
@@ -86,6 +88,8 @@
 .button1:hover{
     background-color: rgba(128, 168, 86, 0.769);
 }
+
+   /* Estilo Botão 2 */
 .button2{
     background-color: rgba(102, 133, 69, 0.769);
     padding: 20px ;
@@ -129,15 +133,14 @@
 }
 .each-slide-effect > div {
   display: flex;
-  align-items: center;
+  align-items: right;
   justify-content: center;
   background-size: cover;
   height: 350px;
 }
 
 .slideshow {
-  width: 62.5%;
-  height: 100%;
+  width: 62.9%;
   display:inline-flex;
   
 }

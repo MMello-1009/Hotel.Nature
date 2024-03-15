@@ -4,8 +4,10 @@
     font-family: 'Belleza';  
     width: fit-content;
     text-align: left;
+    margin-left: 2%;
   }
   .primeira-imagem{
+    margin-left: 2%;
     float: left;
     width: 33.33%;
     padding: 5px;
@@ -20,15 +22,18 @@
     object-fit: cover;
   }
   .sobre-atividade{
+    margin-left: 2%;
     color: #6F8854;
     font-family: 'Belleza'; 
   }
   .subtitulos{
+    margin-left: 2%;
     text-align: left;
     color: #6F8854;
     font-family: 'Belleza'; 
   }
   .texto{
+    margin-left: 2%;
     font-family: 'Belleza';
     text-align: left;
     width: 66.66%;

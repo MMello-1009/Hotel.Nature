@@ -15,10 +15,11 @@
   margin: 20px auto;
 }
 
-.tabela{
+.form{
   font-family: 'belleza';
-  text-align: left;
+  text-align: center;
   
+
 }
 .submeter_botao{
     background-color: #6F8854;
@@ -28,6 +29,7 @@
     transition: 0.3s;
     font-family: 'Belleza';
     border:none;
+    position: center;
    
 }
 .linha_tabela{
@@ -42,26 +44,27 @@
   margin-left: 20px;
   color: #6F8854;
   text-align: center;
+  margin-right: 5vw;
 }
 .morada{
   font-family: 'Belleza';
   margin-left: 20px;
   color: #6F8854;
   text-align: center;
+  margin-right: 5vw;
 }
 .contactos{
   text-align: left;
   font-family: 'Belleza';
   margin-left: 20px;
   text-align: center;
+  margin-right: 5vw;
 }
 .contactosimg{
- 
-  margin-left: 40%;
-  width: 300px;
-  height: 200px;
   display: flex;
-  justify-content: center;
+  margin-left: auto;
+  margin-right: auto;
+  width: 20%;
 }
 input{
   height: 30px;

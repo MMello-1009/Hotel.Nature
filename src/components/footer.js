@@ -25,9 +25,9 @@ const Footer = () => {
           <td>
           <div className="footer-right">
             <p>
-            email:hotel@real.natura.pt
+            email: hotel@real.natura.pt
             <br></br>
-            telemovel:+351 253 682 396
+            telemovel: +351 253 682 396
             </p>
             
           </div>
