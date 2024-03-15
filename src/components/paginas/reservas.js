@@ -12,12 +12,6 @@ function Reservas() {
  
     return (
         <div className="reservas">
-<<<<<<< HEAD
-                <div className="disponibilidade">
-                    <h4>dasdasda</h4>
-                    <input type="text">Check in</input>
-                </div>
-=======
             <div className="disponibilidade">
                 <br></br>
                 <p>Check In - Check Out</p>
@@ -40,7 +34,6 @@ function Reservas() {
                 <br></br><br></br>
             </div>
 
->>>>>>> 29c831b80f18a2b573dc0444f193e6d4a0c949d6
         </div>
     );
 }

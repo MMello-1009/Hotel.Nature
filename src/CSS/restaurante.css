@@ -97,10 +97,19 @@
   .flip-card-back {
     transform: rotateY(180deg);
   }
+  .chefstitulogeral
+  {
+    margin-left: 3vw;
+    font-size: larger;
+    color: black;
+    font-family: 'Belleza';
+    width: fit-content;
+    border-bottom: 2px solid #6F8854;
+  }
   .chefstitulo
   {
     font-size: larger;
-    margin-left: 3vw;
+    margin-bottom: 3vh;
     color: black;
     font-family: 'Belleza';
     width: fit-content;
@@ -126,8 +135,22 @@
       background-color: blueviolet;
     }
   }
+  .each-slide-effect > div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-size: cover;
+    height: 350px;
+  }
   .imgchef
   {
+    margin-right: 15% ;
+    float: right;
     border-radius: 8px;
+    height: 50%;
+  }
+  .chef-text
+  {
+    line-height: 4vh ;
   }
 }
