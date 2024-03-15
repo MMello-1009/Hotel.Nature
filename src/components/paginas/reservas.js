@@ -14,8 +14,10 @@ function Reservas() {
     return (
         <div className="reservas">
             <div className="disponibilidade">
-                <br></br>
-                <p>Check In - Check Out</p>
+                <table>
+                    <td>
+                <div className="divcheckin">
+                    <p>Check In</p>
                 <DatePicker className="checkin"
                     selectsStart
                     selected={startDate}
@@ -23,6 +25,12 @@ function Reservas() {
                     startDate={startDate}
   
                 />
+                </div>
+                </td>
+
+                <td>
+                <div className="divcheckout">
+                <p>Check In</p>
                 <DatePicker className="checkin"
                     selectsEnd
                     selected={endDate}
@@ -31,9 +39,13 @@ function Reservas() {
                     startDate={startDate}
                     minDate={startDate}
                 />
-                
+                </div>
+                </td>
+
+                <td>
                 <button className="botao-disponibilidade" type="button">Verificar disponibilidade</button>
-                <br></br><br></br>
+                </td>
+                </table>
             </div>
 
         </div>
