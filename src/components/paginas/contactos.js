@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import axios from 'axios';
+//import axios from 'axios';
 import '../../CSS/contactos.css';
 
 
@@ -37,11 +37,12 @@ function EmailForm() {
 
   const sendEmail = async (emailData) => {
     const { telemovel, email, assunto } = emailData;
-    await axios.post('/enviar-formulario', { telemovel, email, assunto });
+    //await axios.post('/enviar-formulario', { telemovel, email, assunto });
   };
 
   return (
     <form onSubmit={handleSubmit} className="form" action="/enviar-formulario" method="post">
+      <p>Para mais informações ou para reservas contacte-nos ou preencha o formulário</p><br></br>
       <input className="linha_tabela" type="number" name="telemovel" placeholder="Telemovel" value={emailData.telemovel} onChange={handleChange}  />
       <br /><br />
       <input className="linha_tabela" type="email" name="email" placeholder="Email" value={emailData.email} onChange={handleChange}  />

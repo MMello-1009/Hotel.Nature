@@ -35,7 +35,7 @@ const Homepage = () => {
                Mais Quartos
             </Link>
          </div>
-         <h1 className='textserv'>Facilidades e Serviços</h1>
+         <h1 className='textserv'>Facilidades & Serviços</h1>
 
          <div className='gridserviços'>
             <div className='griditem'>

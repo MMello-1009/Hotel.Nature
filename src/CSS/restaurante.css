@@ -28,11 +28,11 @@
   }
 
   .text-on-image {
-    background-color: rgba(99, 99, 99, 0.37);
+    background-color: #b4a66abb;
     color: white;
     position: absolute;
     text-align: center;
-    top: 90%;
+    top: 80%;
     left: 10%;
     font-family: 'Belleza';
     transform: translate(-50%, -50%);
@@ -126,6 +126,7 @@
   }
   .chefscontent
   {
+    
     width: 50%;
     .esquerda{
       background-color: #6F8854;
@@ -134,13 +135,6 @@
     {
       background-color: blueviolet;
     }
-  }
-  .each-slide-effect > div {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-size: cover;
-    height: 350px;
   }
   .imgchef
   {
@@ -153,4 +147,16 @@
   {
     line-height: 4vh ;
   }
+  .slide-arrow {
+    width: 50px;
+    height: min-content; /* Aqui você pode ajustar a altura das setas */
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    background-size: contain;
+    background-repeat: no-repeat;
+  }
+  
+  
 }

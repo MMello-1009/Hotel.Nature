@@ -44,9 +44,9 @@ function Hotel() {
 
         </div>
       </div>
-      <br></br><br></br>
+      
       <div>
-        <h1 className="titulo">Facilidades e Serviços</h1><br></br>
+        <h1 className="titulo">Facilidades & Serviços</h1><br></br><br></br>
 
         <div className='gridserviços'>
           <div className='griditem'>
@@ -96,7 +96,7 @@ function Hotel() {
           </div>
         </div>
       </div>
-      <br></br><br></br><br></br><br></br>
+      <br></br><br></br>
 
       <Slide>
         <div className="each-slide-effect">
@@ -119,9 +119,9 @@ function Hotel() {
             <span></span>
           </div>
         </div>
-
-
+        
       </Slide>
+     
       <br></br><br></br>
 
     </div>
