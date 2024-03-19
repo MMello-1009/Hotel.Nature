@@ -35,7 +35,7 @@ function Hotel() {
         </p>
       </div>
       <br></br>
-      <div>
+      
         <img className="imagem-hotel" src='../Imagens/Suite_Familiar--/varanda.jpg' />
         <div className="overlay">
           <div className="circle">40 Quartos</div>
@@ -43,9 +43,9 @@ function Hotel() {
           <div className="circle">36 Staff</div>
 
         </div>
-      </div>
       
-      <div>
+      
+      <div className="servicos">
         <h1 className="titulo">Facilidades & Serviços</h1><br></br><br></br>
 
         <div className='gridserviços'>
@@ -99,6 +99,7 @@ function Hotel() {
       <br></br><br></br>
 
       <Slide>
+        
         <div className="each-slide-effect">
           <div style={{ 'backgroundImage': `url(${imagens[0]})` }}>
             <span></span>

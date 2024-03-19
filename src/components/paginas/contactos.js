@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-//import axios from 'axios';
+import axios from 'axios';
 import '../../CSS/contactos.css';
 
 
@@ -17,7 +17,12 @@ function EmailForm() {
       [name]: value
     }));
   };
-
+  
+  const sendEmail = async (emailData) => {
+    const { telemovel, email, assunto } = emailData;
+    await axios.post('/enviar-formulario', { telemovel, email, assunto });
+  };
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -35,25 +40,27 @@ function EmailForm() {
     }
   };
 
-  const sendEmail = async (emailData) => {
-    const { telemovel, email, assunto } = emailData;
-    //await axios.post('/enviar-formulario', { telemovel, email, assunto });
-  };
 
   return (
-    <form onSubmit={handleSubmit} className="form" action="/enviar-formulario" method="post">
-      <p>Para mais informações ou para reservas contacte-nos ou preencha o formulário</p><br></br>
-      <input className="linha_tabela" type="number" name="telemovel" placeholder="Telemovel" value={emailData.telemovel} onChange={handleChange}  />
-      <br /><br />
-      <input className="linha_tabela" type="email" name="email" placeholder="Email" value={emailData.email} onChange={handleChange}  />
-      <br /><br />
-      <input className="linha_tabela" type='textarea' name="assunto" placeholder="Assunto" value={emailData.assunto} onChange={handleChange}/>
-      <br /><br />
-      <button className='submeter_botao' type="submit">Submeter</button>
-      <br /><br />
+    <form onSubmit={handleSubmit} className="form">
+      <Contactos/>
+      <div className="contactos-geral">
+        <p>Para mais informações ou para reservas contacte-nos ou preencha o formulário</p><br></br>
+        <input className="linha_tabela" type="number" name="telemovel" placeholder="Telemovel" value={emailData.telemovel} onChange={handleChange} />
+        <br /><br />
+        <input className="linha_tabela" type="email" name="email" placeholder="Email" value={emailData.email} onChange={handleChange} />
+        <br /><br />
+        <textarea className="linha_tabela" name="assunto" placeholder="Assunto" value={emailData.assunto} onChange={handleChange} />
+        <br /><br />
+        <button className='submeter_botao' type="submit">Submeter</button>
+        <br /><br />
+      </div>
+      
     </form>
   );
 }
+export default EmailForm;
+
 
 function Contactos() {
   return (
@@ -67,7 +74,7 @@ function Contactos() {
       </div>
       <br /><br />
       <h3 className="telefone">Email:</h3>
-      <p className="contactos">hotel@real.natura.pt</p>
+      <p className="contactos">hotel@realnatura.pt</p>
 
       <h3 className="telefone">Telefone:</h3>
       <p className="contactos">Tlf: +351 253 682 396 (Chamada para a rede fixa nacional)</p>
@@ -80,10 +87,9 @@ function Contactos() {
         <img src="../Imagens/mapa.png" className="contactosimg" alt="mapa" />
       </a>
       <br /><br />
-      <EmailForm />
+     
     </div>
   );
 }
 
-export default Contactos;
-
+export { Contactos, EmailForm };

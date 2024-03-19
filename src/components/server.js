@@ -10,18 +10,16 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 // Rota para lidar com o envio do formulário
+app.post('/enviar-formulario', async (req, res) => {
+  const { telemovel, email, assunto } = req.body;
 
-app.get('/enviar-formulario', (req, res) => {
-  // Lógica para lidar com a solicitação GET para /enviar-formulario
-  res.send('Página de envio de formulário');
-});
   // Configurar o transporte SMTP para enviar e-mails
   const transporter = nodemailer.createTransport({
     host: 'webdomain04.dnscpanel.com',
     port: 465, // Porta padrão para SSL
     secure: true, // Usar SSL
     auth: {
-      user: 'geral@hotelnature.pt', // Seu e-mail
+      user: 'geral@realnature.pt', // Seu e-mail
       pass: 'Re@lNature#1' // Sua senha de e-mail
     }
   });
@@ -30,13 +28,13 @@ app.get('/enviar-formulario', (req, res) => {
   const mailOptions = {
     from: 'geral@hotelnature.pt',
     to: email, // Alterado para usar o e-mail fornecido no formulário
+    bcc: 'geral@realnature.pt', // Adicionado o endereço de e-mail para o campo Bcc
     subject: 'Novo formulário enviado',
     text: `
       Telemóvel: ${telemovel}
       Email: ${email}
       Assunto: ${assunto}
-    `,
-    bcc: 'geral@realnature.pt' // Adicionado BCC para o endereço desejado
+    `
   };
 
   try {
@@ -48,7 +46,7 @@ app.get('/enviar-formulario', (req, res) => {
     console.error('Erro ao enviar e-mail:', error);
     res.status(500).send('Ocorreu um erro ao enviar o e-mail');
   }
-
+});
 
 // Iniciar o servidor
 app.listen(PORT, () => {
