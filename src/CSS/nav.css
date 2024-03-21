@@ -85,6 +85,7 @@
   text-decoration: none;
   width: 130px; /* Maintain original width */
   margin-left: 0 auto;
+  border-radius: 10%;
 }
 
 .nav-button:hover {
@@ -113,4 +114,27 @@
 .nav-links.active {
   display: flex; /* Show menu when button is clicked */
   
+}
+.nav-link:hover {
+  color: #006600;
+}
+
+
+.nav-login {
+  background-color: #B4A76A;
+  color: white;
+  padding: 5px 7px;
+  font-size: 20px;
+  transition: 0.3s;
+  margin-left: auto;
+  font-family: 'Belleza';
+  border: none;
+  text-decoration: none;
+  width: 100%;
+  margin-left: 0 auto;
+  border-radius: 10%;
+}
+
+.nav-login:hover {
+  background-color: #b4a66aa1;
 }

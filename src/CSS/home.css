@@ -80,6 +80,7 @@ h4 {
   display: grid;
   grid-template-columns: repeat(5, 1fr); /* 3 colunas de largura igual */
   background-color: white;   
+  margin-bottom: 15vh;
 }
 .griditem
 {

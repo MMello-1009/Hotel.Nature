@@ -1,81 +1,94 @@
-.contactos-geral{
-  .contactos-titulo{
-  color: white;
-  font-family: 'Belleza';
-  width: fit-content;
-  margin: 0 auto;
-}
-.div{
-  background-color: #6F8854;
-  color: white;
-  font-family: 'Belleza';
-}
-.informacoes{
-  width: 50%;
-  margin: 20px auto;
-}
-
-.form{
-  font-family: 'belleza';
+.contactos-geral {
   text-align: center;
-  
 
-}
-.submeter_botao{
+  .contactos-titulo {
+    color: white;
+    font-family: 'Belleza';
+    width: fit-content;
+    margin: 0 auto;
+
+  }
+
+  .div {
+    background-color: #6F8854;
+    color: white;
+    font-family: 'Belleza';
+  }
+
+  .informacoes {
+    width: 50%;
+    margin: 20px auto;
+  }
+
+  .form {
+    font-family: 'belleza';
+    text-align: center;
+    display: flex;
+    position: absolute;
+
+
+  }
+
+  .submeter_botao {
     background-color: #6F8854;
     color: white;
     padding: 5px 10px;
     font-size: 15px;
     transition: 0.3s;
     font-family: 'Belleza';
-    border:none;
-    position: center;
-   
-}
-.linha_tabela{
-  
-  border-right: 2px solid ;
-  border-right-color: #6F8854;
-  padding: 3px 20px;
-  text-align: center;
-}
-.telefone{
-  font-family: 'Belleza';
-  margin-left: 20px;
-  color: #6F8854;
-  text-align: center;
-  margin-right: 5vw;
-}
-.morada{
-  font-family: 'Belleza';
-  margin-left: 20px;
-  color: #6F8854;
-  text-align: center;
-  margin-right: 5vw;
-}
-.contactos{
-  text-align: left;
-  font-family: 'Belleza';
-  margin-left: 20px;
-  text-align: center;
-  margin-right: 5vw;
-}
-.contactosimg{
-  display: flex;
-  margin-left: auto;
-  margin-right: auto;
-  width: 20%;
-}
-input{
-  height: 30px;
-  width: 20%;
-  border: 1px solid #6F8854;
-  
-}
-textarea{
-  height: 90px;
-  width: 20%;
-  border: 1px solid #6F8854;
-}
-}
+    border: none;
+  }
 
+  .linha_tabela {
+
+    border-right: 2px solid;
+    border-right-color: #6F8854;
+    padding: 3px 5px;
+    text-align: center;
+    position: relative;
+  }
+
+  .telefone {
+    font-family: 'Belleza';
+    margin-left: 20px;
+    color: #6F8854;
+    text-align: center;
+    margin-right: 5vw;
+  }
+
+  .morada {
+    font-family: 'Belleza';
+    margin-left: 20px;
+    color: #6F8854;
+    text-align: center;
+    margin-right: 5vw;
+  }
+
+  .contactos {
+    text-align: left;
+    font-family: 'Belleza';
+    margin-left: 20px;
+    text-align: center;
+    margin-right: 5vw;
+  }
+
+  .contactosimg {
+    display: flex;
+    margin-left: auto;
+    margin-right: auto;
+    width: 20%;
+  }
+
+  input {
+    height: 30px;
+    width: 20%;
+    border: 1px solid #6F8854;
+
+  }
+
+  textarea {
+    height: 90px;
+    width: 20%;
+    border: 1px solid #6F8854;
+  }
+}

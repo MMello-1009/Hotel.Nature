@@ -40,12 +40,17 @@
     font-family: 'Belleza';
     line-height: 1.5em;
   }
-
+  .servicos{
+    margin-top: -15vh;
+    
+  }
   .gridserviços {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
     /* 3 colunas de largura igual */
     background-color: #6F8854;
+    margin-bottom: 10%;
+    
   }
 
   .griditem {

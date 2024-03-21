@@ -32,7 +32,7 @@ git push
 
 Clonar para disco do GitHub:
 
-git clone [https://github.com/JAlex1969/task-tracker.git](https://github.com/MMello-1009/Hotel.Nature.git)
+git clone (https://github.com/MMello-1009/Hotel.Nature.git)
 
 Atualizar para o disco do GitHub:
 
