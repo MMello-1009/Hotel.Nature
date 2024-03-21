@@ -1,68 +1,47 @@
 import React, { useState } from 'react';
-import axios from 'axios';
 import '../../CSS/contactos.css';
 
+function Contactos() {
+  const [telemovel, setTelemovel] = useState('');
+  const [email, setEmail] = useState('');
+  const [assunto, setAssunto] = useState('');
+  const [enviado, setEnviado] = useState(false); // Estado para controlar se o e-mail foi enviado com sucesso
+  const [erroCampoVazio, setErroCampoVazio] = useState(false); // Estado para controlar se ocorreu um erro de campo vazio
 
-function EmailForm() {
-  const [emailData, setEmailData] = useState({
-    telemovel: '',
-    email: '',
-    assunto: ''
-  });
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setEmailData(prevData => ({
-      ...prevData,
-      [name]: value
-    }));
-  };
-  
-  const sendEmail = async (emailData) => {
-    const { telemovel, email, assunto } = emailData;
-    await axios.post('/enviar-formulario', { telemovel, email, assunto });
-  };
-  
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    // Verificar se algum campo está vazio
+    if (!telemovel || !email || !assunto) {
+      alert('Preencha todos os campos antes de enviar o e-mail.');
+      return;
+    }
+
     try {
-      await sendEmail(emailData);
-      alert('Email enviado com sucesso');
-      // Limpe o formulário após o envio
-      setEmailData({
-        telemovel: '',
-        email: '',
-        assunto: ''
+      const response = await fetch('http://localhost:3001/enviar-email', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ telemovel, email, assunto }),
       });
+
+      if (response.ok) {
+        alert('O e-mail foi enviado com sucesso!');
+        setEnviado(true); // Define enviado como verdadeiro se a resposta do servidor for bem-sucedida
+        // Limpar campos do formulário após o envio
+        setTelemovel('');
+        setEmail('');
+        setAssunto('');
+      } else {
+        throw new Error('Erro ao enviar email');
+      }
     } catch (error) {
       console.error('Erro ao enviar email:', error);
-      alert('Ocorreu um erro ao enviar o email');
+      alert('Erro ao enviar email. Por favor, tente novamente mais tarde.');
     }
   };
 
-
-  return (
-    <form onSubmit={handleSubmit} className="form">
-      <Contactos/>
-      <div className="contactos-geral">
-        <p>Para mais informações ou para reservas contacte-nos ou preencha o formulário</p><br></br>
-        <input className="linha_tabela" type="number" name="telemovel" placeholder="Telemovel" value={emailData.telemovel} onChange={handleChange} />
-        <br /><br />
-        <input className="linha_tabela" type="email" name="email" placeholder="Email" value={emailData.email} onChange={handleChange} />
-        <br /><br />
-        <textarea className="linha_tabela" name="assunto" placeholder="Assunto" value={emailData.assunto} onChange={handleChange} />
-        <br /><br />
-        <button className='submeter_botao' type="submit">Submeter</button>
-        <br /><br />
-      </div>
-      
-    </form>
-  );
-}
-export default EmailForm;
-
-
-function Contactos() {
   return (
     <div className="contactos-geral">
       <div className="div">
@@ -87,9 +66,23 @@ function Contactos() {
         <img src="../Imagens/mapa.png" className="contactosimg" alt="mapa" />
       </a>
       <br /><br />
-     
+      
+      <form onSubmit={handleSubmit} method='POST'>
+        <div className="contactos-geral">
+          <p>Para mais informações ou para reservas contacte-nos ou preencha o formulário</p><br></br>
+          <input className="linha_tabela" type="number" name="telemovel" placeholder="Telemovel" value={telemovel} onChange={(e) => setTelemovel(e.target.value)} style={{borderRadius:'10px'}}/>
+          <br /><br />
+          <input className="linha_tabela" type="email" name="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} style={{borderRadius:'10px'}}/>
+          <br /><br />
+          <textarea className="linha_tabela" name="assunto" placeholder="Assunto" value={assunto} onChange={(e) => setAssunto(e.target.value)} style={{borderRadius:'10px'}}/>
+          <br /><br />
+          <button className='submeter_botao' type="submit">Submeter</button>
+          <br /><br />
+          {enviado && <p onClick={() => setEnviado(false)}></p>}
+        </div>
+      </form>
     </div>
   );
 }
 
-export { Contactos, EmailForm };
+export default Contactos;

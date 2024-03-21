@@ -18,12 +18,13 @@
     .checkin {
         color: #B4A76A;
         padding: 5%;
+        border: #B4A76A;
     }
 
     .botao-disponibilidade {
         background-color: #6F8854;
         color: white;
-        padding: 5px 10px;
+        padding: 4px 10px;
         font-size: 15px;
         transition: 0.3s;
         font-family: 'Belleza';
