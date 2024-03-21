@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import '../CSS/nav.css'; // Assuming the CSS file is in the same directory
-import Popup from 'reactjs-popup';//POPUP LOGIN
-import 'reactjs-popup/dist/index.css';//POPUP LOGIN
+import LoginPopup from './paginas/login';
+
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
@@ -11,11 +11,6 @@ const Navbar = () => {
     setOpen(!open); // Toggle the 'open' state on button click
 
   };
-  const PopupExample = () => (//POPUP LOGIN
-    <Popup trigger={<button> Trigger</button>} position="right center">
-      <div>Popup content here !!</div>
-    </Popup>
-  );
   return (
     <nav className="navbar" style={{ backgroundColor: '#fff', width: '100%' }}>
       <Link to="/" className="nav-logo">
@@ -71,11 +66,7 @@ const Navbar = () => {
           </Link>
         </li>
         <li className="nav-item">
-          <Link to="/" className="nav-link">
-            <button className="nav-login" onClick={handleClick}>
-              Login
-            </button>
-          </Link>
+          <LoginPopup />
         </li>
       </ul>
 
@@ -85,5 +76,11 @@ const Navbar = () => {
     </nav>
   );
 };
+
+/*<Link to='/'  className="nav-link">
+<button className="nav-login" onClick={handleClick}>
+Login
+</button>
+</Link>*/
 
 export default Navbar;

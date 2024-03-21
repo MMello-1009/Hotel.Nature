@@ -1,0 +1,93 @@
+.popup-content {
+    border-radius: 10px;
+    padding: 0%;
+    width: fit-content; /* Definindo a largura como fit-content */
+  }  
+.login-button {
+    background-color: #B4A76A;
+    color: white;
+    padding: 5px 10px;
+    font-size: 20px;
+    transition: 0.3s;
+    font-family: 'Belleza';
+    border: none;
+    text-decoration: none;
+    width: 5vw;
+    margin-left: 0 auto;
+    border-radius: 10%;
+  }
+  
+  .login-button:hover {
+    background-color: #b4a66ac7;
+  }
+  
+  .close-button {
+    position: absolute;
+    top: 2vh;
+    right: 3vh;
+    display: inline-block;
+    padding: 2.5px 6px;
+    border-radius: 6px;
+    background-color: hsl(0deg 70% 47%);
+    color: #fff;
+    grid-area: close;
+    align-self: start;
+  }
+  
+  .close-button:hover {
+    background-color: hsl(0deg 70% 57%);
+  }
+  
+  .login-geral {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+  }
+  
+  .modal {
+    border: solid 2px;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: fit-content;
+  }
+  
+  .header {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+  
+  .content {
+    margin-right: 10vh;
+    margin-bottom: 5vh;
+  }
+  
+  label {
+    display: block;
+    margin-bottom: 5px;
+  }
+  
+  input {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  .login-submit {
+    background-color: #B4A76A;
+    color: white;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .login-submit:hover {
+    background-color: #b4a66ac7;
+  }

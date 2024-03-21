@@ -13,6 +13,8 @@ const connection = new mssql.ConnectionPool({
 });
 
 const app = express();
+const sql = require('mssql');
+
 
 app.use(cors({
     origin: '*'
@@ -24,7 +26,6 @@ app.use(bodyparser.json());
 
 connection.connect();
 
-// Rota GET
 app.get('/login', (req, res) => {
     let { email } = req.query;
     if (email == null) {
