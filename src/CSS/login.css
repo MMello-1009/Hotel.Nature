@@ -86,8 +86,38 @@
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    margin-right: 5vw;
   }
   
   .login-submit:hover {
     background-color: #b4a66ac7;
+  }
+  .register-content {
+    padding: 20px;
+  }
+  
+  .register-content {
+    display: none;
+  }
+  
+  .register-toggle {
+    background-color: #6F8854;
+    color: white;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-right: 5vw;
+  }
+  .register-submit {
+    background-color: #6F8854;
+    color: white;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .register-submit:hover {
+    background-color: #6f8854b0;
   }
