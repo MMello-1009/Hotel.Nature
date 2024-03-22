@@ -33,5 +33,163 @@
         margin-right: 50%;
     }
 
+    
+  .pagetitle{
+    font-size: 312.5%;
+    font-family:'Belleza';
+    color:#B4A76A;
+    border-bottom: 2px solid #6F8854;
+    border-width: 10%;
+    width: fit-content;
+    text-align: center;
+    align-items: center;
+    margin: 0 auto;
+
+  }
+  .card {
+    display: flex;
+    flex-direction: row;
+    width: 70%; /* Adjust width as needed */
+    margin: 0 auto; /* Center the card on the page */
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.1);
+    margin-top: 3%;
+  }
+  
+  .card-image {
+    display: flex;
+    justify-content: center;
+    align-items: left;
+    object-fit: cover;
+    width: 40%; /* Set image container width */
+  }
+  
+  .card-content {
+    padding: 10px;
+    flex: 1; /* Allow content to fill remaining space */
+    justify-content: space-between; /* Distribute content horizontally */
+    text-align: left; /* Aligns all text inside .card-content to the left */
+  }
+  .card-content p {
+    justify-content: space-between; /* Distribute content horizontally */
+    text-align: left; /* Aligns all text inside .card-content to the left */
+    margin-left: 2%;
+    font-family: 'Belleza';
+  }
+  .card-content li {
+    justify-content: space-between; /* Distribute content horizontally */
+    text-align: left; /* Aligns all text inside .card-content to the left */
+    margin-left: 5%;
+  }
+  .roomtitle p{
+    font-size: 40px;
+    color: #6F8854;
+    text-align: left;
+    margin-left: 10px;
+    font-family: 'Belleza';
+  }
+  .roomtitle {
+    font-size: 40px;
+    color: #6F8854;
+    text-align: left;
+    margin-left: 10px;
+    font-family: 'Belleza';
+  }
+
+  /* DIV com os botões */
+  .card-buttons {
+    display: flex;
+  }
+  
+ /* Imagens do Cartão dos Quartos */
+  .card-image img {
+    width: 100%; /* Ensures image doesn't exceed container width */
+    height: auto; /* Maintains image aspect ratio */
+    object-fit: cover;
+  }
+   /* Estilo Botão 1 */
+  .button1{
+    background-color: rgba(102, 133, 69, 0.769);
+    padding: 20px ;
+    border: none;
+    color: white;
+    font-family: 'Belleza';
+    font-size: large;
+    margin-left: 10px;
+    transition: 0.3s;
+    text-decoration: none;
+}
+.button1:hover{
+    background-color: rgba(128, 168, 86, 0.769);
+}
+
+   /* Estilo Botão 2 */
+.button2{
+    background-color: rgba(102, 133, 69, 0.769);
+    padding: 20px ;
+    border: none;
+    color: white;
+    font-family: 'Belleza';
+    font-size: large;
+    margin-left: 10px;
+    text-decoration: none;
+}
+.button2:hover{
+    background-color: rgba(128, 168, 86, 0.769);
+}
+
+.icons{
+  width: 5%;
+  margin-left: 4% ;
+  margin-right: 1%;
+}
+.popup td{
+  text-align: left;
+  font-family: 'Belleza';
+  font-size: 112%;
+  text-align: left;
+}
+.iconcaptions{
+  font-size: 10px;
+  margin: 2%;
+  text-align: left;
+}
+.captions{
+  font-size: 80%;
+  text-align: left;
+}
+.subtitle{
+  text-align: left;
+  margin-left: 4%;
+}
+.popupimage {
+  width: 100%;
+}
+.each-slide-effect > div {
+  display: flex;
+  align-items: right;
+  justify-content: center;
+  background-size: cover;
+  height: 350px;
+}
+
+.slideshow {
+  width: 62.9%;
+  display:inline-flex;
+  
+}
+.close-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
+  font-size: 20px;
+  color: #333;
+  width: 25px;
+}
+
+
+
 
 }

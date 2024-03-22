@@ -12,9 +12,9 @@
     font-family: 'Belleza';
     border: none;
     text-decoration: none;
-    width: 5vw;
+    width: 75px;
     margin-left: 0 auto;
-    border-radius: 10%;
+    border-radius: 5px;
   }
   
   .login-button:hover {

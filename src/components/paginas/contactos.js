@@ -53,7 +53,7 @@ function Contactos() {
       </div>
       <br /><br />
       <h3 className="telefone">Email:</h3>
-      <p className="contactos">hotel@realnatura.pt</p>
+      <a href="mailto:geral@realnatura.pt" style={{color:'black',fontFamily:'Belleza', textDecoration:'none'}}>geral@realnatura.pt</a>
 
       <h3 className="telefone">Telefone:</h3>
       <p className="contactos">Tlf: +351 253 682 396 (Chamada para a rede fixa nacional)</p>
@@ -70,11 +70,11 @@ function Contactos() {
       <form onSubmit={handleSubmit} method='POST'>
         <div className="contactos-geral">
           <p>Para mais informações ou para reservas contacte-nos ou preencha o formulário</p><br></br>
-          <input className="linha_tabela" type="number" name="telemovel" placeholder="Telemovel" value={telemovel} onChange={(e) => setTelemovel(e.target.value)} style={{borderRadius:'10px'}}/>
+          <input className="linha_tabela" type="number" name="telemovel" placeholder="Telemovel" value={telemovel} onChange={(e) => setTelemovel(e.target.value)} style={{borderRadius:'5px'}}/>
           <br /><br />
-          <input className="linha_tabela" type="email" name="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} style={{borderRadius:'10px'}}/>
+          <input className="linha_tabela" type="email" name="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} style={{borderRadius:'5px'}}/>
           <br /><br />
-          <textarea className="linha_tabela" name="assunto" placeholder="Assunto" value={assunto} onChange={(e) => setAssunto(e.target.value)} style={{borderRadius:'10px'}}/>
+          <textarea className="linha_tabela" name="assunto" placeholder="Assunto" value={assunto} onChange={(e) => setAssunto(e.target.value)} style={{borderRadius:'5px'}}/>
           <br /><br />
           <button className='submeter_botao' type="submit">Submeter</button>
           <br /><br />

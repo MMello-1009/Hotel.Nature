@@ -85,7 +85,7 @@
   text-decoration: none;
   width: 130px; /* Maintain original width */
   margin-left: 0 auto;
-  border-radius: 10%;
+  border-radius: 5px;
 }
 
 .nav-button:hover {

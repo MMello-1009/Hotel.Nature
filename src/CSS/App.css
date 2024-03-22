@@ -1,2 +1,8 @@
-
+.master-layout{
+    width: auto;
+    overflow-x: hidden;
+    @media (max-width:800px) {
+        overflow-x: visible;
+    }
+ }
  
