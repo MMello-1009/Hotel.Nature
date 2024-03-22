@@ -43,6 +43,22 @@ app.get('/login', (req, res) => {
         }
     })
 });
+app.post('/register', (req, res) => {
+    const {
+        email, password } = req.body;
+    const query = `INSERT INTO utilizadores (Id_tipo ,Email, Pass) VALUES ('${3}','${email}', '${pass}')`;
+    connection.query(query, (err, results) => {
+        if (err) {
+            res.status(500).json({
+                error: 'Erro ao registar o utilizador'
+            });
+        } else {
+            res.status(201).json({
+                message: 'Utilizador registado com sucesso'
+            });
+        }
+    });
+});
 
 app.listen(4000, () => {
     console.log('Servidor à escuta na porta: 4000');
