@@ -37,7 +37,7 @@ const LoginPopup = () => {
                         </button>
                         <div className="header">Login</div>
                         <br></br>
-                        <div className="content">
+                        <div className="login-content">
                             <form onSubmit={handleSubmit}>
                                 <label>Email:</label>
                                 <input
