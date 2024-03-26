@@ -1,65 +1,60 @@
-const express = require('express');
-const mssql = require("mssql/msnodesqlv8");
-const cors = require('cors');
-var bodyparser = require('body-parser');
+var mssql = require('mssql');
+var express = require('express');
+var app = express();
+var port = 4000;
 
-const connection = new mssql.ConnectionPool({
-    database: "M16_hotel",
-    server: "(localdb)\\MSSQLLocalDB",
-    driver: "msnodesqlv8",
-    options: {
-        trustedConnection: true
+// Set up connection to database.
+var config = {
+  server: "sql.bsite.net\\MSSQL2016", // Corrected hostname with escaped backslashes
+  user: 'hotelnature_',
+  password: 'Re@lNature#1',
+  database: 'hotelnature_',
+  options: {
+    encrypt: true, // Enable encryption
+    trustServerCertificate: true // Trust the self-signed certificate
+  }
+};
+
+// Connect to database.
+mssql.connect(config, function(err) {
+  if (err) {
+    console.error('Error connecting to database:', err);
+    return;
+  }
+  console.log('Connected to database');
+});
+
+app.use(express.json()); // Middleware to parse JSON bodies
+
+app.get('/login', async (req, res) => {
+    const { email } = req.query;
+    try {
+        const request = new mssql.Request();
+        let liga = `SELECT * FROM utilizadores`;
+        if (email) {
+            liga = `SELECT * FROM utilizadores WHERE Email='${email}'`;
+        }
+        const result = await request.query(liga);
+        res.json(result.recordset);
+    } catch (err) {
+        console.error('Error executing query:', err);
+        res.status(500).json({ error: 'Erro a obter dados' });
     }
 });
 
-const app = express();
-const sql = require('mssql');
-
-
-app.use(cors({
-    origin: '*'
-}));
-
-app.use(bodyparser.urlencoded({ extended: false }));
-
-app.use(bodyparser.json());
-
-connection.connect();
-
-app.get('/login', (req, res) => {
-    let { email } = req.query;
-    if (email == null) {
-        var liga = `SELECT * FROM utilizadores`;
-    } else {
-        var liga = `SELECT * FROM utilizadores WHERE Email='${email}'`;
+app.post('/register', async (req, res) => {
+    const { email, password } = req.body;
+    const query = `INSERT INTO utilizadores (Id_tipo, Email, Pass) VALUES ('${3}', '${email}', '${password}')`;
+    try {
+        const request = new mssql.Request();
+        const result = await request.query(query);
+        res.status(201).json({ message: 'Utilizador registado com sucesso' });
+    } catch (err) {
+        console.error('Error executing query:', err);
+        res.status(500).json({ error: 'Erro ao registar o utilizador' });
     }
-    connection.query(liga, (err, results) => {
-        if (err) {
-            res.status(500).json({
-                error: 'Erro a obter dados'
-            });
-        } else {
-            res.json(results.recordset);
-        }
-    })
-});
-app.post('/register', (req, res) => {
-    const {
-        email, password } = req.body;
-    const query = `INSERT INTO utilizadores (Id_tipo ,Email, Pass) VALUES ('${3}','${email}', '${pass}')`;
-    connection.query(query, (err, results) => {
-        if (err) {
-            res.status(500).json({
-                error: 'Erro ao registar o utilizador'
-            });
-        } else {
-            res.status(201).json({
-                message: 'Utilizador registado com sucesso'
-            });
-        }
-    });
 });
 
-app.listen(4000, () => {
-    console.log('Servidor à escuta na porta: 4000');
+app.listen(port, () => {
+    console.log(`Server is running on port ${port}`);
 });
