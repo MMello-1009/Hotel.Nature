@@ -1,5 +1,6 @@
 var mssql = require('mssql');
 var express = require('express');
+const cors = require('cors');
 var app = express();
 var port = 4000;
 
@@ -26,13 +27,19 @@ mssql.connect(config, function(err) {
 
 app.use(express.json()); // Middleware to parse JSON bodies
 
+app.use(cors(
+    {
+        origin:  '*'
+    }
+));
+
 app.get('/login', async (req, res) => {
     const { email } = req.query;
     try {
         const request = new mssql.Request();
         let liga = `SELECT * FROM utilizadores`;
         if (email) {
-            liga = `SELECT * FROM utilizadores WHERE Email='${email}'`;
+            liga = `SELECT * FROM utilizadores WHERE Email='${email} AND Id_tipo = 3'`;
         }
         const result = await request.query(liga);
         res.json(result.recordset);
@@ -44,7 +51,8 @@ app.get('/login', async (req, res) => {
 
 app.post('/register', async (req, res) => {
     const { email, password } = req.body;
-    const query = `INSERT INTO utilizadores (Id_tipo, Email, Pass) VALUES ('${3}', '${email}', '${password}')`;
+    const query = `INSERT INTO utilizadores (Id_tipo, Email, Pass) VALUES (3, '${email}', '${password}')`;
+    //const query2 = 'SELECT MAX(Id_utilizador) FROM utilizadores   '
     try {
         const request = new mssql.Request();
         const result = await request.query(query);

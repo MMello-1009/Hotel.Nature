@@ -16,8 +16,19 @@ const LoginPopup = () => {
       }
 
       const data = await response.json();
-      console.log('Dados do usuário:', data);
-      // Aqui você pode adicionar lógica para tra
+      if (data[0] === undefined) {
+        alert('Email Inválido');
+      }
+      else {
+        let { Email, Pass } = data[0];
+        console.log('Dados do usuário:', Email, Pass);
+
+        if (email == Email && password == Pass) {
+          alert('Login Efetuado com Sucesso!');
+        }else {
+          alert('Password Inválida!');
+        }
+      }
     } catch (error) {
       console.error('Erro ao fazer login:', error);
     }
@@ -30,7 +41,7 @@ const LoginPopup = () => {
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ email, password,})
+        body: JSON.stringify({ email, password, })
       });
 
       if (!response.ok) {
@@ -39,7 +50,7 @@ const LoginPopup = () => {
 
       const data = await response.json();
       console.log('Dados do usuário registrado:', data);
-      // Aqui você pode adicionar lógica após o registro
+
     } catch (error) {
       console.error('Erro ao fazer registro:', error);
     }
