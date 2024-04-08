@@ -6,30 +6,30 @@ var port = 4000;
 
 // Set up connection to database.
 var config = {
-  server: "sql.bsite.net\\MSSQL2016", // Corrected hostname with escaped backslashes
-  user: 'hotelnature_',
-  password: 'Re@lNature#1',
-  database: 'hotelnature_',
-  options: {
-    encrypt: true, // Enable encryption
-    trustServerCertificate: true // Trust the self-signed certificate
-  }
+    server: "sql.bsite.net\\MSSQL2016", // Corrected hostname with escaped backslashes
+    user: 'hotelnature_',
+    password: 'Re@lNature#1',
+    database: 'hotelnature_',
+    options: {
+        encrypt: true, // Enable encryption
+        trustServerCertificate: true // Trust the self-signed certificate
+    }
 };
 
 // Connect to database.
-mssql.connect(config, function(err) {
-  if (err) {
-    console.error('Error connecting to database:', err);
-    return;
-  }
-  console.log('Connected to database');
+mssql.connect(config, function (err) {
+    if (err) {
+        console.error('Error connecting to database:', err);
+        return;
+    }
+    console.log('Connected to database');
 });
 
 app.use(express.json()); // Middleware to parse JSON bodies
 
 app.use(cors(
     {
-        origin:  '*'
+        origin: '*'
     }
 ));
 
@@ -50,12 +50,18 @@ app.get('/login', async (req, res) => {
 });
 
 app.post('/register', async (req, res) => {
-    const { email, password } = req.body;
-    const query = `INSERT INTO utilizadores (Id_tipo, Email, Pass) VALUES (3, '${email}', '${password}')`;
-    //const query2 = 'SELECT MAX(Id_utilizador) FROM utilizadores   '
+    const { Email, Pass , nif, nome} = req.query;
+    console.log(req.query);
     try {
+        const query = `INSERT INTO utilizadores (Id_tipo, Email, Pass) VALUES (3, '${Email}', '${Pass}')`;
         const request = new mssql.Request();
         const result = await request.query(query);
+        const result2 = await request.query('SELECT MAX(Id_utilizador) as MAX FROM utilizadores');
+        let { MAX } = result2.recordset[0];
+        console.log(MAX);
+        const result3 =  await request.query(`INSERT INTO clientes (Nif_Cli, Id_utilizador, NomeCli) VALUES (${nif}, ${MAX}, '${nome}')`);
+        //MUDAR IDENTITY NA BASE DE DADOS
+        
         res.status(201).json({ message: 'Utilizador registado com sucesso' });
     } catch (err) {
         console.error('Error executing query:', err);

@@ -3,6 +3,8 @@ import Popup from 'reactjs-popup';
 import '../../CSS/login.css';
 
 const LoginPopup = () => {
+  const [nome, setNome] = useState('');
+  const [nif, setNif] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showRegister, setShowRegister] = useState(false);
@@ -105,11 +107,23 @@ const LoginPopup = () => {
 
             <div className="register-content" style={{ display: showRegister ? 'block' : 'none' }}>
               <form onSubmit={handleRegisterSubmit}>
+              <label>Nome:</label>
+                <input
+                  type="nome"
+                  value={nome}
+                  onChange={(e) => setNome(e.target.value)}
+                />
                 <label>Email:</label>
                 <input
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
+                />
+                <label>NIF:</label>
+                <input
+                  type="number"
+                  value={nif}
+                  onChange={(e) => setNif(e.target.value)}
                 />
                 <label>Password:</label>
                 <input
