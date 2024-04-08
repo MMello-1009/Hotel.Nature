@@ -4,8 +4,30 @@ import "react-datepicker/dist/react-datepicker.css";
 import DatePicker from "react-datepicker";
 import { Link } from "react-router-dom";
 
-function Reservas() {
+function Counter() {
+  const [count, setCount] = useState(0);
 
+  const increment = () => {
+    setCount(count + 1);
+  };
+
+  const decrement = () => {
+    if (count > 0) {
+      setCount(count - 1);
+    }
+  };
+
+  return (
+    <div>
+      <button onClick={increment}>Incrementar</button>
+      <h1>{count}</h1>
+      <button onClick={decrement}>Decrementar</button>
+    </div>
+  );
+}
+function Reservas() {
+  
+    const [showCounter, setShowCounter] = useState(false);
     const [date, setDate] = useState(new Date());
     const [startDate, setStartDate] = useState();
     const [endDate, setEndDate] = useState();
@@ -71,9 +93,13 @@ function Reservas() {
             <div className="card-buttons">
             <button  className="button1">
             Ver mais
-          </button>
+          </button >
           
-              <Link to="/reserva" className="button2">Reservar</Link>
+                  {!showCounter ? (
+                <button onClick={() => setShowCounter(true)} className="button2">Reservar</button>
+              ) : (
+                <Counter />
+              )}
             </div>
           </div>
 

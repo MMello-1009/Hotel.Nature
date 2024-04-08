@@ -97,15 +97,7 @@
   .flip-card-back {
     transform: rotateY(180deg);
   }
-  .chefstitulogeral
-  {
-    margin-left: 3vw;
-    font-size: larger;
-    color: black;
-    font-family: 'Belleza';
-    width: fit-content;
-    border-bottom: 2px solid #6F8854;
-  }
+  
   .chefstitulo
   {
     font-size: larger;
@@ -128,13 +120,7 @@
   {
     
     width: 50%;
-    .esquerda{
-      background-color: #6F8854;
-    }
-    .direita
-    {
-      background-color: blueviolet;
-    }
+    
   }
   .imgchef
   {
@@ -149,7 +135,7 @@
   }
   .slide-arrow {
     width: 50px;
-    height: min-content; /* Aqui você pode ajustar a altura das setas */
+    height: min-content; /* Aqui ajusta a altura das setas */
     position: absolute;
     top: 50%;
     transform: translateY(-50%);

@@ -25,9 +25,9 @@ const Footer = () => {
           <td>
           <div className="footer-right">
             <p>
-            Email:<a href="mailto:geral@realnatura.pt" style={{color:'white', textDecoration:'none'}}>geral@realnatura.pt</a>
+            Email:<a href="mailto:geral@realnatura.pt" style={{color:'white', textDecoration:'none'}}> geral@realnatura.pt</a>
             <br></br>
-            telemovel: +351 253 682 396
+            Telemovel: +351 253 682 396
             </p>
             
           </div>
