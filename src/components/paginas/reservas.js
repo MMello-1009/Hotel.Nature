@@ -4,12 +4,62 @@ import "react-datepicker/dist/react-datepicker.css";
 import DatePicker from "react-datepicker";
 import { Link } from "react-router-dom";
 
-function Reservas() {
 
-    const [date, setDate] = useState(new Date());
-    const [startDate, setStartDate] = useState();
-    const [endDate, setEndDate] = useState();
-    
+function Reservas() {
+  function Counter() {
+    const [count, setCount] = useState(0);
+  
+    const increment = () => {
+      setCount(count + 1);
+    };
+  
+    const decrement = () => {
+      if (count > 0) {
+        setCount(count - 1);
+      }
+    };
+  
+    return (
+      <div className="counter">
+        <button onClick={increment}>+</button>
+        <h1>{count}</h1>
+        <button onClick={decrement}>-</button>
+      </div>
+    );
+  }
+
+  const [count, setCount] = useState(0);
+  const [selectedRoom, setSelectedRoom] = useState("");
+  const [roomPrices, setRoomPrices] = useState({
+    Suite: 100,
+    QuartoDuplo: 100,
+    QuartoTwin: 100,
+    SuiteFamiliar: 100,
+    QuartoSolteiro: 100,
+  });
+ 
+  
+
+  const handleRoomSelection = (room) => {
+    setSelectedRoom(room);
+  };
+
+  const calculateTotalPrice = () => {
+    if (!selectedRoom) return 1;
+    if (selectedRoom) return roomPrices[selectedRoom] * count;
+  };
+  
+ function showCounterAndSelectRoom1() {
+    setShowCounter(true);
+    handleRoomSelection('Suite');
+  }
+  const [showCounter, setShowCounter] = useState(false);
+  const [date, setDate] = useState(new Date());
+  const [startDate, setStartDate] = useState();
+  const [endDate, setEndDate] = useState();
+
+
+
     
  
     return (
@@ -71,9 +121,16 @@ function Reservas() {
             <div className="card-buttons">
             <button  className="button1">
             Ver mais
-          </button>
+          </button >
           
-              <Link to="/reserva" className="button2">Reservar</Link>
+          {!showCounter ? (
+                <button onClick={ showCounterAndSelectRoom1()} className="button2" >
+                  Reservar
+                </button>
+              ) : (
+                <Counter />
+              )}
+              <h2>{calculateTotalPrice()}</h2>
             </div>
           </div>
 
@@ -101,7 +158,18 @@ function Reservas() {
             Ver mais
           </button>
           
-              <Link to="/reserva" className="button2">Reservar</Link>
+          {!showCounter ? (
+                <button onClick={() => setShowCounter(true)} className="button2">Reservar</button>
+                
+              ) : (
+                
+                <Counter/>
+                
+              )}
+              
+              
+               
+              
             </div>
           </div>
 
@@ -131,7 +199,11 @@ function Reservas() {
           </button>
           
           
-              <Link to="/reserva" className="button2">Reservar</Link>
+          {!showCounter ? (
+                <button onClick={() => setShowCounter(true)} className="button2">Reservar</button>
+              ) : (
+                <Counter />
+              )}
             </div>
           </div>
 
@@ -159,7 +231,11 @@ function Reservas() {
             Ver mais
           </button>
           
-              <Link to="/reserva" className="button2">Reservar</Link>
+          {!showCounter ? (
+                <button onClick={() => setShowCounter(true)} className="button2">Reservar</button>
+              ) : (
+                <Counter />
+              )}
             </div>
           </div>
 
@@ -188,7 +264,11 @@ comodidades.
             Ver mais
           </button>
          
-              <Link to="/reserva" className="button2">Reservar</Link>
+          {!showCounter ? (
+                <button onClick={() => setShowCounter(true)} className="button2">Reservar</button>
+              ) : (
+                <Counter />
+              )}
             </div>
           </div>
 

@@ -22,7 +22,7 @@ function Restaurante() {
       image: '../Imagens/IMGRESTAURANTE/chef1.png',
     },
     {
-      chef: 'Pedro Pena Bastos',
+      chef: 'Diogo Lopes',
       text: 'O interesse de Diogo Lopes, Chef de Pastelaria do Restaurante REAL, pelas artes da pastelaria remonta aos seus tempos de infância em Portugal. Um "miúdo gorducho" com muito apetite, observava a mãe e a avó na cozinha e começou a fazer os seus próprios pratos simples. "Eu pensava: «gosto tanto de comer que, se calhar, devia cozinhar.» Muitos miúdos diziam o mesmo, mas eu estava a falar a sério". O sonho dele tornou-se realidade e hoje a sua sobremesa de alfarroba e alho preto, ovo e mel, framboesa e lavanda é o final perfeito para uma refeição no Restaurante REAL. “Valorizamos verdadeiramente os momentos frente a frente que temos com os clientes. As pessoas gostam de ter uma ligação com a cozinha, e é sempre bom lembrarmo-nos para quem trabalhamos.”',
       image: '../Imagens/IMGRESTAURANTE/chef2.png',
     },
@@ -58,7 +58,7 @@ function Restaurante() {
     return (
       <div
         onClick={props.onClick}
-        style={{ ...arrowStyles, right: 0 }}
+        style={{ ...arrowStyles, left: 0 }}
       >
         {'>'}
       </div>
@@ -121,10 +121,9 @@ function Restaurante() {
           </div>
         </tr>
       </table>
-      <h2 className="titulos">Conheça a nossa Equipa!</h2>
-      <br/><br/>
-      <h3 className="chefstitulogeral">Chefs do Restaurante Real</h3>
-      <br/><br/><br/>
+      <h2 className="titulos">Chefs do Restaurante Real</h2>
+      <br></br>
+      
       <div className="slide-container">
         <Slide
           prevArrow={<PrevArrow />}
