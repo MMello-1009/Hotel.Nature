@@ -63,7 +63,7 @@ app.post('/register', async (req, res) => {
         let { MAX } = result2.recordset[0];
         console.log(MAX);
 
-        const result3 = await request.query(`INSERT INTO clientes (Nif_Cli, Id_utilizador, NomeCli) VALUES (${nif}, ${MAX}, '${nome}')`);
+        const result3 = await request.query(`INSERT INTO clientes (Nif_Cli,Email ,Id_utilizador, NomeCli) VALUES (${nif},'${Email}', ${MAX}, '${nome}')`);
         
         res.status(201).json({ message: 'Utilizador registado com sucesso' });
     } catch (err) {

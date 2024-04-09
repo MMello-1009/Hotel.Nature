@@ -38,14 +38,15 @@ const LoginPopup = () => {
 
   const handleRegister = async () => {
     try {
-      const response = await fetch('http://localhost:4000/register', {
+      console.log(nome, email, nif, password)
+      const response = await fetch(`http://localhost:4000/register?Email=${email}&Pass=${password}&nif=${nif}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ nome,email, nif,password, })
+        }//,
+        // body: JSON.stringify({nome,email, nif,password, })
       });
-
+      
       if (!response.ok) {
         throw new Error('Erro ao fazer registo');
       }
