@@ -1,9 +1,10 @@
-.reservas {
+.reservas-container {
+  margin-bottom: 15px;
     .disponibilidade {
         background-color: #B4A76A;
     }
 
-    p {
+    .textoalt {
         text-align: left;
         font-family: 'belleza';
         color: white;
@@ -214,4 +215,36 @@
       border: none;
       
     }
+}
+.tray {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background-color: rgba(255, 255, 255, 0.836);
+  padding: 10px;
+  border-top: 1px solid #cccccc;
+  z-index: 999; /* Certifique-se de que a bandeja esteja na frente de outros elementos */
+  font-family: 'Belleza';
+  
+}
+.pricetag{
+  font-size: 20px;
+}
+
+.contador{
+  padding: 10px;
+  align-items: center;
+  text-align: center;
+  font-family: 'Belleza';
+  button{
+    background-color: #6F8854;
+    border: none;
+    color: white;
+    padding: 10px;
+  }
+  span{
+    padding: 10px;
+  }
+  
 }

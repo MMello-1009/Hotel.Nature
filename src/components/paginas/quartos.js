@@ -152,10 +152,10 @@ function Quartos() {
   
   const QuartoTwinPopUp = () => {
     const imagens = [
-      "../Imagens/Quarto_twin/camas.jpg",
-      "../Imagens/Quarto_twin/casa_de_banho.jpg",
-      "../Imagens/Quarto_twin/camas.jpg",
-      "../Imagens/Quarto_twin/casa_de_banho.jpg",
+      "../Imagens/Quarto_twin--/quartotwin1.jpg",
+      "../Imagens/Quarto_twin--/casa_de_banho.jpg",
+      "../Imagens/Quarto_twin--/quartotwin1.jpg",
+      "../Imagens/Quarto_twin--/casa_de_banho.jpg",
     ];
   
     return (
@@ -219,10 +219,10 @@ function Quartos() {
   
   const SuiteFamiliarPopUp = () => {
     const imagens = [
-      "../Imagens/Suite_Familiar--/2quartos.jpg",
+      "../Imagens/Suite_Familiar--/suitefamiliar1.jpg",
       "../Imagens/Suite_Familiar--/quarto_duasCamas.jpg",
-      "../Imagens/Suite--/quartoCasal.jpg",
-      "../Imagens/Suite--/varanda.jpg"
+      "../Imagens/Suite_Familiar--/quartoCasal.jpg",
+      "../Imagens/Suite_Familiar--/varanda.jpg"
     ];
   
     return (
@@ -286,10 +286,10 @@ function Quartos() {
   
   const QuartoSolteiroPopUp = () => {
     const imagens = [
-      "../Imagens/Quarto_Solteiro/quarto_single.jpg",
-      "../Imagens/Quarto_Solteiro/single.jpg",
-      "../Imagens/Quarto_Solteiro/quarto_single.jpg",
-      "../Imagens/Quarto_Solteiro/single.jpg",
+      "../Imagens/Quarto_Solteiro--/quartosolteiro1.jpg",
+      "../Imagens/Quarto_Solteiro--/single.jpg",
+      "../Imagens/Quarto_Solteiro--/quartosolteiro1.jpg",
+      "../Imagens/Quarto_Solteiro--/single.jpg",
     ];
   
     return (
@@ -451,7 +451,7 @@ function Quartos() {
 
           <div class="card">
           <div class="card-image">
-            <img src="../Imagens/Quarto_twin/camas.jpg" alt="Suite Modern King Bed Room" />
+            <img src="../Imagens/Quarto_twin--/quartotwin1.jpg" alt="Suite Modern King Bed Room" />
           </div>
           <div class="card-content">
             <p className="roomtitle">Quarto Twin</p>
@@ -497,7 +497,7 @@ function Quartos() {
 
           <div class="card">
           <div class="card-image">
-            <img src="../Imagens/Suite_Familiar--/2quartos.jpg" alt="Suite Modern King Bed Room" />
+            <img src="../Imagens/Suite_Familiar--/suitefamiliar1.jpg" alt="Suite Modern King Bed Room" />
           </div>
           <div class="card-content">
             <p className="roomtitle">Suite Familiar</p>
@@ -542,7 +542,7 @@ function Quartos() {
 
           <div class="card" style={{ marginBottom:'3%' }} >
           <div class="card-image">
-            <img src="../Imagens/Quarto_Solteiro/quarto_single.jpg" alt="Suite Modern King Bed Room" />
+            <img src="../Imagens/Quarto_Solteiro--/quartosolteiro1.jpg" alt="Suite Modern King Bed Room" />
           </div>
           <div class="card-content">
             <p className="roomtitle">Quarto Solteiro</p>
