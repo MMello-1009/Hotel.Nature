@@ -50,21 +50,25 @@ app.get('/login', async (req, res) => {
 });
 
 app.post('/register', async (req, res) => {
-    const { Email, Pass , nif, nome} = req.query;
+    const { Email, Pass, nif, nome } = req.query;
     console.log(req.query);
     try {
+        console.log('mostra')
         const query = `INSERT INTO utilizadores (Id_tipo, Email, Pass) VALUES (3, '${Email}', '${Pass}')`;
         const request = new mssql.Request();
         const result = await request.query(query);
+
         const result2 = await request.query('SELECT MAX(Id_utilizador) as MAX FROM utilizadores');
+
         let { MAX } = result2.recordset[0];
         console.log(MAX);
-        const result3 =  await request.query(`INSERT INTO clientes (Nif_Cli, Id_utilizador, NomeCli) VALUES (${nif}, ${MAX}, '${nome}')`);
-        //MUDAR IDENTITY NA BASE DE DADOS
+
+        const result3 = await request.query(`INSERT INTO clientes (Nif_Cli, Id_utilizador, NomeCli) VALUES (${nif}, ${MAX}, '${nome}')`);
         
         res.status(201).json({ message: 'Utilizador registado com sucesso' });
     } catch (err) {
         console.error('Error executing query:', err);
+        
         res.status(500).json({ error: 'Erro ao registar o utilizador' });
     }
 });
