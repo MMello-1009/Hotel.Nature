@@ -11,7 +11,8 @@ function Reservas() {
   const [totalPrice, setTotalPrice] = useState(0);
   const [warning, setWarning] = useState(false);
   const [price,setPrice] = useState(false);
-
+  const [availableRooms, setAvailableRooms] = useState([]);
+  
   const cards = [
     { id: 1, title: "Suite", value: 100, area: "50m²", capacity: "2 Pessoas", bedType: "Cama King Size", amenities: ["Ar condicionado", "Pequeno-Almoço incluído", "Parque gratuito", "TV LCD", "Internet Wi-Fi"] },
     { id: 2, title: "Quarto Duplo", value: 150, area: "25m²", capacity: "2 Pessoas", bedType: "Cama de Casal", amenities: ["Ar condicionado", "Pequeno-Almoço incluído", "Parque gratuito", "TV LCD", "Internet Wi-Fi"] },
@@ -34,6 +35,13 @@ function Reservas() {
     }
     if(totalRoomsCount+value==0)
     setPrice(false);
+  };
+
+  const handleAvailabilityCheck = () => {
+    // Simular uma verificação de disponibilidade na base de dados com os IDs selecionados e a data escolhida
+    // Aqui você pode implementar a lógica para verificar a disponibilidade dos quartos
+    const available = cards.filter(card => selectedRooms[card.id] > 0);
+    setAvailableRooms(available);
   };
 
   const updateTotalPrice = (updatedRooms) => {
@@ -83,8 +91,8 @@ function Reservas() {
               />
             </div>
           </td>
-          <td>
-            <button className="botao-disponibilidade" type="button">Verificar disponibilidade</button>
+          <td >
+            <button type="button" >Verificar disponibilidade</button>
           </td>
         </table>
       </div>
