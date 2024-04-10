@@ -2,7 +2,7 @@
   margin-bottom: 15px;
     .disponibilidade {
         background-color: #B4A76A;
-        button{
+        .verificarbutton{
           background-color: #6F8854;
           border: 0;
           color: white;
@@ -24,7 +24,7 @@
         
           
         }
-    }button:hover{
+    }.verificarbutton:hover{
       background-color: #86a366;
       cursor: pointer;
     }
