@@ -64,7 +64,7 @@ function Reservas() {
     const total = Object.entries(updatedRooms).reduce((acc, [roomId, count]) => {
       const room = cards.find(card => card.id.toString() === roomId);
       if (room) {
-        return acc + count * room.value;
+        return acc + count * cards.value;
       }
       return acc;
     }, 0);
@@ -113,43 +113,45 @@ function Reservas() {
         </table>
       </div>
 
-      <div className="reservas-cards">
+      
       {availableRooms && availableRooms.length > 0 && availableRooms.map(room => (
-  <div className="card" key={room.id}>
+        <div className="reservas-cards">
+  <div className="card" key={cards.id}>
     <div className="card-image">
-      {room && room.title && (
-        <img src={`../Imagens/${room.title.replace(/\s+/g, "_").toLowerCase()}--/${room.title.replace(/\s+/g, "").toLowerCase()}1.jpg`} alt={room.title} />
+      {cards && cards.title && (
+        <img src={`../Imagens/${cards.title.replace(/\s+/g, "_").toLowerCase()}--/${cards.title.replace(/\s+/g, "").toLowerCase()}1.jpg`} alt={cards.title} />
       )}
     </div>
     <div className="card-content">
-      <p className="roomtitle">{room.title}</p>
-      <p><strong>Área do quarto:</strong> {room.area}</p>
-      <p><strong>Capacidade:</strong> {room.capacity}</p>
-      <p><strong>Tipo de cama:</strong> {room.bedType}</p>
+      <p className="roomtitle">{cards.title}</p>
+      <p><strong>Área do quarto:</strong> {cards.area}</p>
+      <p><strong>Capacidade:</strong> {cards.capacity}</p>
+      <p><strong>Tipo de cama:</strong> {cards.bedType}</p>
       <p><strong>Comodidades:</strong></p>
       <ul>
-        {room.amenities.map((amenity, index) => (
+        {cards.amenities.map((amenity, index) => (
           <li key={index}>{amenity}</li>
         ))}
       </ul>
-      <p className="pricetag"><strong>Preço por noite: </strong> {room.value}€</p>
+      <p className="pricetag"><strong>Preço por noite: </strong> {cards.value}€</p>
       <div className="card-buttons">
-        {selectedRooms[room.id] === undefined || selectedRooms[room.id] === 0 ? (
-          <button className="button1" onClick={() => handleReserve(room.id, 1)}>
+        {selectedRooms[cards.id] === undefined || selectedRooms[cards.id] === 0 ? (
+          <button className="button1" onClick={() => handleReserve(cards.id, 1)}>
             Reservar
           </button>
         ) : (
           <div className="contador">
-            <button onClick={() => handleIncrease(room.id)}>+</button>
-            <span>{selectedRooms[room.id]}</span>
-            <button onClick={() => handleDecrease(room.id)}>-</button>
+            <button onClick={() => handleIncrease(cards.id)}>+</button>
+            <span>{selectedRooms[cards.id]}</span>
+            <button onClick={() => handleDecrease(cards.id)}>-</button>
           </div>
         )}
       </div>
     </div>
   </div>
+  </div>
 ))}
-      </div>
+      
 
       {warning && (
         <div className="warning">
