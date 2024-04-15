@@ -2,7 +2,10 @@ import React, { useState } from "react";
 import '../../CSS/reservas.css';
 import "react-datepicker/dist/react-datepicker.css";
 import DatePicker from "react-datepicker";
-import { Link } from "react-router-dom";
+import { Link} from "react-router-dom";
+import { format } from 'date-fns';
+
+
 
 function Reservas() {
   const [startDate, setStartDate] = useState(new Date());
@@ -21,7 +24,28 @@ function Reservas() {
     { Id_tipo: 4, title: "Suite Familiar", value: 600, area: "60m²", capacity: "4 Pessoas", bedType: "Cama King Size e 2 Camas de Solteiro", amenities: ["Ar condicionado", "Pequeno-Almoço incluído", "Parque gratuito", "TV LCD", "Internet Wi-Fi"] },
     { Id_tipo: 5, title: "Quarto Solteiro", value: 300, area: "18m²", capacity: "1 Pessoa", bedType: "Cama de Solteiro", amenities: ["Ar condicionado", "Pequeno-Almoço incluído", "Parque gratuito", "TV LCD", "Internet Wi-Fi"] }
   ];
+  
 
+  const handleFinalizar = async () => {
+    try {
+      const formattedStartDate = format(startDate, 'yyyy/MM/dd');
+      const formattedEndDate = format(endDate, 'yyyy/MM/dd');
+  
+      console.log("Detalhes da reserva:", formattedStartDate, formattedEndDate, selectedRooms);
+      // Resetar o estado após a reserva
+      setStartDate(new Date());
+      setEndDate(new Date());
+      setSelectedRooms({});
+      setTotalPrice(0);
+      setWarning(false);
+      setPrice(false);
+      // Redirecionar o usuário para a página de adicionais
+      
+    } catch (error) {
+      console.error("Erro ao fazer reserva:", error);
+      // Tratar erros de reserva, se necessário
+    }
+  };
   const handleReserve = (roomId, value) => {
     const newCount = (selectedRooms[roomId] || 0) + value;
     const totalRoomsCount = Object.values(selectedRooms).reduce((acc, count) => acc + count, 0);
@@ -43,7 +67,7 @@ function Reservas() {
       const formattedStartDate = startDate.toISOString().split('T')[0];
       const formattedEndDate = endDate.toISOString().split('T')[0];
       const response = await fetch(`http://localhost:4000/availability?startDate=${formattedStartDate}&endDate=${formattedEndDate}`);
-  
+      
       if (!response.ok) {
         throw new Error('Erro ao verificar disponibilidade');
       }
@@ -107,8 +131,9 @@ function Reservas() {
                   selected={endDate}
                   onChange={(date) => setEndDate(date)}
                   endDate={endDate}
-                  startDate={startDate}
-                  minDate={startDate} // Definindo a data mínima como a data de check-in
+                  startDate={startDate.getTime() + 24 * 60 * 60 * 1000}
+                  minDate={startDate.getTime() + 24 * 60 * 60 * 1000} // Definindo a data mínima como a data de check-in
+                  dateFormat="dd/MM/yyyy"
                 />
               </div>
           </td>
@@ -175,7 +200,7 @@ function Reservas() {
                 <h2>Total Preço: {totalPrice}€</h2>
               </td>
               <td>
-                <button className="button1">Reservar</button>
+              <Link to="/adicionais" className="button1" onClick={handleFinalizar}>Finalizar a reserva</Link>
               </td>
             </tr>
           </table>
@@ -185,5 +210,7 @@ function Reservas() {
     </div>
   );
 }
+
+
 
 export default Reservas;

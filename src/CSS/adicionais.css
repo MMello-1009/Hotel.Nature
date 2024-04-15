@@ -1,0 +1,10 @@
+.adicionais{
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+    .Pensoes h1{
+        font-family: 'Belleza';
+        font-size: 20px;
+        color: #333;
+    }
+}

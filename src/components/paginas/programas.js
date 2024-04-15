@@ -1,13 +1,19 @@
-import React from "react";
+import React, { useState }  from "react";
 import '../../CSS/programas.css';
 
 function Programas() {
   return (
     <div className="programas">
-      <br></br>
+       <img className ="programasimg" src ='../Imagens/Paisagens/albufeira-da-caniçada.jpg'/>
+          <h1 className="texto-na-imagen">Usufrua dos nossos programas</h1>
+          
+      <br></br><br></br>
+      
         <h1 className="programas-titulo">Canyoning</h1><br></br>
+        <div className="imagens">
           <img className="primeira-imagem" src="../Imagens/Programas/canyoning_geres.jpg"></img>
           <img className="segunda-imagem" src="../Imagens/Programas/canyoning_geres_conho_3.jpg"></img>
+          </div>
           <br></br><br></br><br></br><br></br><br></br><br></br><br></br><br></br><br></br><br></br><br></br><br></br><br></br><br></br><br></br><br></br><br></br><br></br><br></br><br></br>
           <h3 className="sobre-atividade">Sobre esta atividade:</h3>
       <p className="texto">O canyoning é um desporto onde se pode encontrar uma relação de estreita harmonia entre
