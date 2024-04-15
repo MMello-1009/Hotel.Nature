@@ -50,7 +50,7 @@ app.get('/login', async (req, res) => {
 });
 
 app.post('/register', async (req, res) => {
-    const { Email, Pass, nif, nome } = req.query;
+    const { Email, Pass, nif, Telemovel, NomeCLi } = req.query;
     console.log(req.query);
     try {
         console.log('mostra')
@@ -63,12 +63,12 @@ app.post('/register', async (req, res) => {
         let { MAX } = result2.recordset[0];
         console.log(MAX);
 
-        const result3 = await request.query(`INSERT INTO clientes (Nif_Cli,Email ,Id_utilizador, NomeCli) VALUES (${nif},'${Email}', ${MAX}, '${nome}')`);
-        
+        const result3 = await request.query(`INSERT INTO clientes (Nif_Cli,Email ,Id_utilizador, NomeCli, Telemovel) VALUES (${nif},'${Email}', ${MAX}, '${NomeCLi}', '${Telemovel}')`);
+
         res.status(201).json({ message: 'Utilizador registado com sucesso' });
     } catch (err) {
         console.error('Error executing query:', err);
-        
+
         res.status(500).json({ error: 'Erro ao registar o utilizador' });
     }
 });
