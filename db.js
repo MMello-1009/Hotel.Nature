@@ -74,41 +74,43 @@ app.post('/register', async (req, res) => {
 });
 
 app.get('/availability', async (req, res) => {
-    const { startDate, endDate } = req.query; // Use req.query para obter os parâmetros da solicitação GET
-  
+    const { startDate, endDate } = req.query;
+    console.log('startDate:', startDate);
+    console.log('endDate:', endDate);
     try {
-        const pool = await mssql.connect(config); // Conecte-se ao banco de dados usando as configurações
-  
+        const pool = await mssql.connect(config);
+
         const query = `
-    SELECT *
-    FROM tipo_quarto
-    WHERE Id_tipo NOT IN (
-        SELECT Id_quarto
-        FROM reservas_quarto
-        WHERE Data_inicio <= @startDate AND Data_fim >= @endDate
-    )
-    AND Lotacao >= (
-        SELECT COUNT(Id_quarto)
-        FROM reservas_quarto
-        WHERE Data_inicio <= @startDate AND Data_fim >= @endDate
-        AND tipo_quarto.Id_tipo = reservas_quarto.Id_quarto
-    )`;
+            SELECT *
+            FROM tipo_quarto
+            WHERE Id_tipo NOT IN (
+                SELECT Id_quarto
+                FROM reservas_quarto
+                WHERE Data_inicio <= @startDate AND Data_fim >= @endDate
+            )
+            AND Lotacao >= (
+                SELECT COUNT(Id_quarto)
+                FROM reservas_quarto
+                WHERE Data_inicio <= @startDate AND Data_fim >= @endDate
+                AND tipo_quarto.Id_tipo = reservas_quarto.Id_quarto
+            )`;
 
-
-      
         const result = await pool.request()
             .input('startDate', mssql.Date, startDate)
             .input('endDate', mssql.Date, endDate)
             .query(query);
-  
-        const availableRooms = result.recordset; // Use result.recordset para obter os resultados da consulta
-  
+
+        const availableRooms = result.recordset;
+        console.log('availableRooms:', availableRooms);
+
         res.json({ availableRooms: availableRooms });
     } catch (error) {
         console.error('Erro ao verificar disponibilidade:', error);
         res.status(500).json({ error: 'Erro ao verificar disponibilidade' });
     }
 });
+
+
 
 
 
