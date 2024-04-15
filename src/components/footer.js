@@ -27,7 +27,7 @@ const Footer = () => {
             <p>
             Email:<a href="mailto:geral@realnatura.pt" style={{color:'white', textDecoration:'none'}}> geral@realnatura.pt</a>
             <br></br>
-            Telemovel: +351 253 682 396
+            Telemóvel: +351 253 682 396
             </p>
             
           </div>

@@ -50,7 +50,7 @@ app.get('/login', async (req, res) => {
 });
 
 app.post('/register', async (req, res) => {
-    const { Email, Pass, nif, Telemovel, NomeCLi } = req.query;
+    const { Email, Pass, nif, Telemovel, NomeCli } = req.query;
     console.log(req.query);
     try {
         console.log('mostra')
@@ -63,7 +63,7 @@ app.post('/register', async (req, res) => {
         let { MAX } = result2.recordset[0];
         console.log(MAX);
 
-        const result3 = await request.query(`INSERT INTO clientes (Nif_Cli,Email ,Id_utilizador, NomeCli, Telemovel) VALUES (${nif},'${Email}', ${MAX}, '${NomeCLi}', '${Telemovel}')`);
+        const result3 = await request.query(`INSERT INTO clientes (Nif_Cli,Email ,Id_utilizador, NomeCli, Telemovel) VALUES (${nif},'${Email}', ${MAX}, '${NomeCli}', '${Telemovel}')`);
 
         res.status(201).json({ message: 'Utilizador registado com sucesso' });
     } catch (err) {
