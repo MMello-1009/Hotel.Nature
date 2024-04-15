@@ -38,7 +38,7 @@ function Hotel() {
       
         <img className="imagem-hotel" src='../Imagens/Suite_Familiar--/varanda.jpg' />
         <div className="overlay">
-          <div className="circle">40 Quartos</div>
+          <div className="circle">45 Quartos</div>
           <div className="circle">2100 Hóspedes Anuais</div>
           <div className="circle">36 Staff</div>
 
