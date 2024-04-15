@@ -7,6 +7,7 @@ const LoginPopup = () => {
   const [nif, setNif] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [tlm, setTlm] = useState('');
   const [showRegister, setShowRegister] = useState(false);
 
   const handleLogin = async () => {
@@ -38,13 +39,12 @@ const LoginPopup = () => {
 
   const handleRegister = async () => {
     try {
-      console.log(nome, email, nif, password)
-      const response = await fetch(`http://localhost:4000/register?Email=${email}&Pass=${password}&nif=${nif}`, {
+      console.log(nome, email, nif, tlm, password)
+      const response = await fetch(`http://localhost:4000/register?Email=${email}&Pass=${password}&nif=${nif}&NomeCli=${nome}&Telemovel=${tlm}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
-        }//,
-        // body: JSON.stringify({nome,email, nif,password, })
+        }
       });
       
       if (!response.ok) {
@@ -100,7 +100,7 @@ const LoginPopup = () => {
                 <button className="login-submit" type="submit">
                   Login
                 </button>
-                <button className="register-toggle" onClick={toggleRegister}>
+                <button className="register-toggle" type="button" onClick={toggleRegister}>
                   Sign Up
                 </button>
               </form>
@@ -120,6 +120,12 @@ const LoginPopup = () => {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                 />
+                <label>Telemóvel:</label>
+                <input
+                  type="tlm"
+                  value={tlm}
+                  onChange={(e) => setTlm(e.target.value)}
+                />
                 <label>NIF:</label>
                 <input
                   type="number"
@@ -132,7 +138,7 @@ const LoginPopup = () => {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                 />
-                <button className="register-toggle" onClick={toggleRegister}>
+                <button className="register-toggle" type="button" onClick={toggleRegister}>
                   Cancel
                 </button>
                 <button className="register-submit" type="submit">
