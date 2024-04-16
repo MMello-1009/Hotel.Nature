@@ -112,6 +112,89 @@ app.get('/availability', async (req, res) => {
 
 
 
+//FATURAÇÃO
+const PDFDocument = require('pdfkit-browserify');
+const blobStream = require('blob-stream');
+
+function generateInvoice(invoice) {
+  const doc = new PDFDocument();
+  const stream = doc.pipe(blobStream());
+
+  // Cabeçalho
+  doc
+    .fontSize(20)
+    .text('Fatura', { align: 'center' })
+    .fontSize(10)
+    .text('Endereço da Empresa', { align: 'center', width: 500 })
+    .text('Cidade, Estado, CEP', { align: 'center', width: 500 })
+    .moveDown(2);
+
+  // Informações do Cliente
+  doc
+    .fontSize(12)
+    .text(`Cliente: ${invoice.customerName}`)
+    .text(`Endereço: ${invoice.address}`)
+    .text(`Email: ${invoice.email}`)
+    .moveDown(1);
+
+  // Lista de Itens
+  doc
+    .fontSize(12)
+    .text('Lista de Itens:', { underline: true })
+    .moveDown(0.5);
+
+  invoice.items.forEach((item, index) => {
+    doc.text(`${index + 1}. ${item.name} - $${item.price}`);
+  });
+
+  // Subtotal
+  const subtotal = invoice.items.reduce((acc, item) => acc + item.price, 0);
+  doc.moveDown(1).text(`Subtotal: $${subtotal}`);
+
+  // Imposto
+  const taxRate = 0.23; // 23% de imposto
+  const tax = subtotal * taxRate;
+  doc.text(`Imposto (23%): $${tax}`);
+
+  // Total
+  const total = subtotal + tax;
+  doc.moveDown(1).text(`Total: $${total}`, { bold: true });
+
+  // Rodapé
+  doc
+    .fontSize(10)
+    .text('Obrigado por fazer negócios conosco!', { align: 'center', width: 500 })
+    .moveDown(1)
+    .text('Contato: email@empresa.com', { align: 'center', width: 500 });
+
+  // Finalizar o PDF
+  doc.end();
+
+  return stream;
+}
+
+// Exemplo de uso:
+const invoiceData = {
+  customerName: 'João Silva',
+  address: 'Rua das Flores, 123',
+  email: 'joao@example.com',
+  items: [
+    { name: 'Produto 1', price: 50 },
+    { name: 'Produto 2', price: 75 },
+    { name: 'Produto 3', price: 30 },
+  ],
+};
+
+const invoiceStream = generateInvoice(invoiceData);
+
+// Você pode usar o 'invoiceStream' para fazer o que precisa, por exemplo, salvar como arquivo ou enviar para um servidor.
+/*invoiceStream.on('finish', function() {
+  const blob = invoiceStream.toBlob('application/pdf');
+  const url = URL.createObjectURL(blob);
+  window.open(url, '_blank');
+});*/
+
+
 
 
 

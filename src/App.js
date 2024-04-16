@@ -12,6 +12,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Master from './components/MasterLayouts';
 import Adicionais from "./components/paginas/resumoreserva/adicionais";
 import Resumo from "./components/paginas/resumoreserva/resumo";
+import faturaReserva from "./components/paginas/resumoreserva/faturaReserva";
 
 
 function App() {
@@ -30,6 +31,7 @@ function App() {
           <Route path="/reserva" element={<Reservas />} />
           <Route path="/adicionais" element={<Adicionais />} />
           <Route path="/resumo" element={<Resumo />} />
+          <Route path="/fatura" element={<faturaReserva />} />
         </Routes>
       </Master>
     </Router>
