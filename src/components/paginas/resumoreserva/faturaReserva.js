@@ -1,9 +1,9 @@
 import React from "react";
 
 
-const fs = require('fs');
-const PDFDocument = require('pdfkit');
-
+//const fs = require('fs');
+//const PDFDocument = require('pdfkit');
+/*
 function generateInvoice(invoice, path) {
   const doc = new PDFDocument({ size: 'A4', margin: 50 });
 
@@ -75,4 +75,4 @@ const invoiceData = {
 
 generateInvoice(invoiceData, 'fatura.pdf');
 
-export default generateInvoice;
+export default generateInvoice;*/

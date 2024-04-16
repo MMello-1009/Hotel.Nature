@@ -82,7 +82,7 @@ app.get('/availability', async (req, res) => {
 
         const query = `
             SELECT *
-            FROM tipo_quarto
+            FROM quartos
             WHERE Id_tipo NOT IN (
                 SELECT Id_quarto
                 FROM reservas_quarto
@@ -92,7 +92,7 @@ app.get('/availability', async (req, res) => {
                 SELECT COUNT(Id_quarto)
                 FROM reservas_quarto
                 WHERE Data_inicio <= @startDate AND Data_fim >= @endDate
-                AND tipo_quarto.Id_tipo = reservas_quarto.Id_quarto
+                AND quartos.Id_tipo = reservas_quarto.Id_quarto
             )`;
 
         const result = await pool.request()
@@ -113,7 +113,7 @@ app.get('/availability', async (req, res) => {
 
 
 //FATURAÇÃO
-const PDFDocument = require('pdfkit-browserify');
+/*const PDFDocument = require('pdfkit-browserify');
 const blobStream = require('blob-stream');
 
 function generateInvoice(invoice) {
@@ -185,7 +185,7 @@ const invoiceData = {
   ],
 };
 
-const invoiceStream = generateInvoice(invoiceData);
+const invoiceStream = generateInvoice(invoiceData);*/
 
 // Você pode usar o 'invoiceStream' para fazer o que precisa, por exemplo, salvar como arquivo ou enviar para um servidor.
 /*invoiceStream.on('finish', function() {

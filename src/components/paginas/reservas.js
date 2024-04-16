@@ -5,8 +5,6 @@ import DatePicker from "react-datepicker";
 import { Link } from "react-router-dom";
 import { format } from 'date-fns';
 
-
-
 function Reservas() {
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
@@ -15,6 +13,8 @@ function Reservas() {
   const [warning, setWarning] = useState(false);
   const [price, setPrice] = useState(false);
   const [availableRooms, setAvailableRooms] = useState([]);
+  const [showWarning, setShowWarning] = useState(false); // Variável de estado para controlar a exibição do alerta
+
   const today = new Date();
   const minEndDate = new Date(startDate.getTime() + 24 * 60 * 60 * 1000); // Adiciona um dia à startDate
   const initialEndDate = new Date(startDate.getTime() + 2 * 24 * 60 * 60 * 1000); // Adiciona dois dias à startDate (como exemplo)
@@ -26,7 +26,6 @@ function Reservas() {
     { Id_tipo: 4, title: "Suite Familiar", value: 600, area: "60m²", capacity: "4 Pessoas", bedType: "Cama King Size e 2 Camas de Solteiro", amenities: ["Ar condicionado", "Pequeno-Almoço incluído", "Parque gratuito", "TV LCD", "Internet Wi-Fi"] },
     { Id_tipo: 5, title: "Quarto Solteiro", value: 300, area: "18m²", capacity: "1 Pessoa", bedType: "Cama de Solteiro", amenities: ["Ar condicionado", "Pequeno-Almoço incluído", "Parque gratuito", "TV LCD", "Internet Wi-Fi"] }
   ];
-
 
   const handleFinalizar = async () => {
     try {
@@ -47,6 +46,7 @@ function Reservas() {
       // Tratar erros de reserva, se necessário
     }
   };
+
   const handleReserve = (roomId, value) => {
     const newCount = (selectedRooms[roomId] || 0) + value;
     const totalRoomsCount = Object.values(selectedRooms).reduce((acc, count) => acc + count, 0);
@@ -73,7 +73,11 @@ function Reservas() {
         throw new Error('Erro ao verificar disponibilidade');
       }
       if (formattedStartDate === formattedEndDate) { // Aqui está a verificação
+        setShowWarning(true); // Mostrar aviso se as datas forem iguais
+        alert('O Check-out não pode ser igual ao Check-in.');
         throw new Error('Check-in e Check-out não podem ser iguais');
+      } else {
+        setShowWarning(false); // Esconder aviso se as datas forem diferentes
       }
 
       const data = await response.json();
@@ -223,7 +227,5 @@ function Reservas() {
     </div>
   );
 }
-
-
 
 export default Reservas;
