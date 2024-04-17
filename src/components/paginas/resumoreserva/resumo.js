@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-
+import '../../../CSS/resumo.css';
 function Resumo() {
   const urlParams = new URLSearchParams(window.location.search);
   const startDate = new Date(urlParams.get('startDate'));
@@ -13,6 +13,8 @@ function Resumo() {
   const [precoTotal, setPrecoTotal] = useState(0);
   const noites = (endDate - startDate) / (1000 * 60 * 60 * 24);
   const [precoquarto, setPrecoQuarto] = useState(0);
+  const [precopensao, setPrecoPensao] = useState(0);
+  const [quartoNomes, setQuartoNomes] = useState([]);
   
   useEffect(() => {
     const fetchNacionalidades = async () => {
@@ -32,57 +34,58 @@ function Resumo() {
     fetchNacionalidades();
   }, []);
 
-  const fetchQuartoPreco = async () => {
-    try {
-      const roomId = Object.keys(selectedRooms)[0]; // Get the first room ID
-      const response = await fetch(`http://localhost:4000/precos/${roomId}`);
-
-      if (!response.ok) {
-        throw new Error('Erro ao verificar disponibilidade');
-      }
-
-      const data = await response.json();
-      setQuartoPreco(data.preco); // Assuming price is in a 'price' property
-    } catch (error) {
-      console.error('Erro', error);
-    }
-  };
 
   
-
-  const fetchPensaoPreco = async () => {
+  const fetchQuartoPreco = async () => {
     try {
-      
-      const response = await fetch(`http://localhost:4000/pensao/${selectedPension}`);
+      const roomIds = Object.keys(selectedRooms); // Get all room IDs
+      const response = await Promise.all(roomIds.map(roomId => fetch(`http://localhost:4000/precos/${roomId}`)));
 
-      if (!response.ok) {
-        throw new Error('Erro ao verificar disponibilidade');
-      }
+      const roomPrices = await Promise.all(response.map(res => res.json()));
+      const totalPrice = roomPrices.reduce((acc, curr, index) => {
+        const roomCount = Object.values(selectedRooms)[index];
+        return acc + (curr.preco * roomCount);
+      }, 0);
 
-      const data = await response.json();
-      setQuartoPreco(data.precoregime); // Assuming price is in a 'price' property
+      setQuartoPreco(totalPrice);
     } catch (error) {
       console.error('Erro', error);
     }
   };
   useEffect(() => {
     fetchQuartoPreco();
-  }, [precoquarto]);
-  
-  
-    
-   // Call on component mount
+  }, [selectedRooms]);
+
+  const fetchPensaoPreco = async () => {
+    try {
+      const response = await fetch(`http://localhost:4000/pensao/${selectedPension}`);
+
+      
+
+      if (!response.ok) {
+        throw new Error('Erro ao verificar disponibilidade');
+      }
+
+      const data = await response.json();
+      setPensaoPreco(data); // Assuming price is in a 'price' property
+
+    } catch (error) {
+      console.error('Erro', error);
+    }
+  };
+  useEffect(() => {
+    fetchPensaoPreco();
+  }, [selectedPension]);
 
   useEffect(() => {
-    // Update total price whenever quartoPreco or noites changes
-    setPrecoTotal(quartoPreco+pensaoPreco);
-  }, [ quartoPreco+pensaoPreco]);
-
+    // Update total price whenever quartoPreco or pensaoPreco changes
+    setPrecoTotal((quartoPreco+pensaoPreco)*noites);
+  }, [quartoPreco, pensaoPreco]);
 
 
    
   return (
-    <div>
+    <div className="resumocss">
       <h1>Resumo da Reserva</h1>
       <table>
         <tr>
@@ -124,11 +127,12 @@ function Resumo() {
             <p>
               Quartos reservados:{" "}
               {Object.entries(selectedRooms).map(([roomId, count], index) => (
-                <span key={index}>
-                  {count} Quarto{count > 1 ? "s" : ""} de tipo {roomId}
-                  {index < Object.entries(selectedRooms).length - 1 && ", "}
-                </span>
-              ))}
+  <span key={index}>
+    {count} Quarto{count > 1 ? "s" : ""} de tipo {roomId}
+    
+    {index < Object.entries(selectedRooms).length - 1 && ", "}
+  </span>
+))}
             </p>
             <p>Pensão: {selectedPension}</p>
             <p>Preço total: €{precoTotal}</p>

@@ -23,9 +23,24 @@ function Adicionais() {
             <tbody>
               <tr>
                 <td>
-                  <h2>Meia pensão:</h2>
+                  <h2>Alojamento</h2>
                   <p>Pequeno-almoço incluído.</p>
                   <p>Grátis</p>
+                  <input 
+                    type="radio" 
+                    id="alojamento" 
+                    name="Pensão" 
+                    value="alojamento"
+                    checked={selectedPension === "alojamento"}
+                    onChange={handlePensionChange}
+                  />
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <h2>Meia pensão:</h2>
+                  <p>Pequeno-almoço e 1 refeição incluida</p>
+                  <p>Preço: 50€ por dia / pessoa</p>
                   <input 
                     type="radio" 
                     id="meia-pensao" 

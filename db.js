@@ -149,14 +149,15 @@ app.get('/pensao/:selectedPension', async (req, res) => {
             .query(query);
 
         const precoregime = result.recordset[0].Preco;
-        console.log('preco regime:', precoregime);
+        console.log("preço regime: ",precoregime);
 
-        res.json({ precoregime });
+        res.json( precoregime );
     } catch (error) {
         console.error('Erro ao verificar disponibilidade:', error);
         res.status(500).json({ error: 'Erro ao verificar disponibilidade' });
     }
 });
+
 
 
 
