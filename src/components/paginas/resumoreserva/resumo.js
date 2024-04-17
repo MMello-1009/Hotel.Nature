@@ -5,10 +5,15 @@ function Resumo() {
   const startDate = new Date(urlParams.get('startDate'));
   const endDate = new Date(urlParams.get('endDate'));
   const selectedRooms = JSON.parse(urlParams.get('selectedRooms'));
-  
+  const selectedPension = urlParams.get('selectedPension');
   const [nacionalidades, setNacionalidades] = useState([]);
   const [selectedNacionalidade, setSelectedNacionalidade] = useState("");
-
+  const [quartoPreco, setQuartoPreco] = useState(0);
+  const [pensaoPreco, setPensaoPreco] = useState(0);
+  const [precoTotal, setPrecoTotal] = useState(0);
+  const noites = (endDate - startDate) / (1000 * 60 * 60 * 24);
+  const [precoquarto, setPrecoQuarto] = useState(0);
+  
   useEffect(() => {
     const fetchNacionalidades = async () => {
       try {
@@ -27,6 +32,55 @@ function Resumo() {
     fetchNacionalidades();
   }, []);
 
+  const fetchQuartoPreco = async () => {
+    try {
+      const roomId = Object.keys(selectedRooms)[0]; // Get the first room ID
+      const response = await fetch(`http://localhost:4000/precos/${roomId}`);
+
+      if (!response.ok) {
+        throw new Error('Erro ao verificar disponibilidade');
+      }
+
+      const data = await response.json();
+      setQuartoPreco(data.preco); // Assuming price is in a 'price' property
+    } catch (error) {
+      console.error('Erro', error);
+    }
+  };
+
+  
+
+  const fetchPensaoPreco = async () => {
+    try {
+      
+      const response = await fetch(`http://localhost:4000/pensao/${selectedPension}`);
+
+      if (!response.ok) {
+        throw new Error('Erro ao verificar disponibilidade');
+      }
+
+      const data = await response.json();
+      setQuartoPreco(data.precoregime); // Assuming price is in a 'price' property
+    } catch (error) {
+      console.error('Erro', error);
+    }
+  };
+  useEffect(() => {
+    fetchQuartoPreco();
+  }, [precoquarto]);
+  
+  
+    
+   // Call on component mount
+
+  useEffect(() => {
+    // Update total price whenever quartoPreco or noites changes
+    setPrecoTotal(quartoPreco+pensaoPreco);
+  }, [ quartoPreco+pensaoPreco]);
+
+
+
+   
   return (
     <div>
       <h1>Resumo da Reserva</h1>
@@ -76,19 +130,13 @@ function Resumo() {
                 </span>
               ))}
             </p>
-            <p>Pensão: {urlParams.get('selectedPension')}</p>
-            <p>Preço total: {calculateTotalPrice(selectedRooms)}€</p>
+            <p>Pensão: {selectedPension}</p>
+            <p>Preço total: €{precoTotal}</p>
           </td>
         </tr>
       </table>
     </div>
   );
-}
-
-function calculateTotalPrice(selectedRooms) {
-  // Aqui você pode implementar a lógica para calcular o preço total com base nos quartos selecionados
-  // Por enquanto, vamos apenas retornar um valor fixo para demonstração
-  return 1015;
 }
 
 export default Resumo;

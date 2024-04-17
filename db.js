@@ -84,19 +84,15 @@ app.get('/availability', async (req, res) => {
         const pool = await mssql.connect(config);
 
         const query = `
-            SELECT *
-            FROM quartos
-            WHERE Id_tipo NOT IN (
-                SELECT Id_quarto
-                FROM reservas_quarto
-                WHERE Data_inicio <= @startDate AND Data_fim >= @endDate
-            )
-            AND Lotacao >= (
-                SELECT COUNT(Id_quarto)
-                FROM reservas_quarto
-                WHERE Data_inicio <= @startDate AND Data_fim >= @endDate
-                AND quartos.Id_tipo = reservas_quarto.Id_quarto
-            )`;
+        SELECT
+        quartos.Id_tipo,COUNT(quartos.Id_tipo) AS Lotacao , tipo_quarto.Descricao
+    FROM quartos inner join tipo_quarto on quartos.Id_tipo = tipo_quarto.Id_tipo
+    WHERE quartos.Id_tipo NOT IN (
+        SELECT reservas_quarto.Id_quarto
+        FROM reservas_quarto
+        WHERE reservas_quarto.Data_inicio >= '`+startDate+`' AND reservas_quarto.Data_fim <= '`+endDate+`'
+    )
+    group by quartos.Id_tipo, tipo_quarto.Descricao`;
 
         const result = await pool.request()
             .input('startDate', mssql.Date, startDate)
@@ -107,6 +103,55 @@ app.get('/availability', async (req, res) => {
         console.log('availableRooms:', availableRooms);
 
         res.json({ availableRooms: availableRooms });
+    } catch (error) {
+        console.error('Erro ao verificar disponibilidade:', error);
+        res.status(500).json({ error: 'Erro ao verificar disponibilidade' });
+    }
+});
+
+app.get('/precos/:roomId', async (req, res) => {
+    const { roomId } = req.params;
+    
+  
+    try {
+      const pool = await mssql.connect(config);
+  
+      const query = `SELECT preco FROM tipo_quarto WHERE Id_tipo = @roomId`;
+  
+      const result = await pool.request()
+        .input('roomId', mssql.Int, roomId)
+        .query(query);
+  
+      // Extract the price from the first record in the result set
+      const preco = result.recordset[0].preco;
+  
+      console.log('preco:', preco);
+  
+      // Send only the price as the response
+      res.json({ preco });
+    } catch (error) {
+      console.error('Erro ao verificar disponibilidade:', error);
+      res.status(500).json({ error: 'Erro ao verificar disponibilidade' });
+    }
+  });
+
+app.get('/pensao/:selectedPension', async (req, res) => {
+    const { selectedPension } = req.params; // Usar req.params para obter o parâmetro selectedPension
+    
+    
+    try {
+        const pool = await mssql.connect(config);
+
+        const query = `SELECT Preco FROM regime WHERE Tipo_regime = @selectedPension`; // Usar @selectedPension como parâmetro
+
+        const result = await pool.request()
+            .input('selectedPension', mssql.NVarChar, selectedPension) // Usar mssql.NVarChar para strings
+            .query(query);
+
+        const precoregime = result.recordset[0].Preco;
+        console.log('preco regime:', precoregime);
+
+        res.json({ precoregime });
     } catch (error) {
         console.error('Erro ao verificar disponibilidade:', error);
         res.status(500).json({ error: 'Erro ao verificar disponibilidade' });
