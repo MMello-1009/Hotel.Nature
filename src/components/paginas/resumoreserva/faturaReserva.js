@@ -3,6 +3,7 @@ import React from 'react';
 
 function FaturaReserva() {
   const handleGenerateInvoice = async () => {
+    
     const invoiceData = {
       customerName: 'João Silva',
       address: 'Rua das Flores, 123',
@@ -13,6 +14,7 @@ function FaturaReserva() {
         { name: 'Produto 3', price: 30 },
       ],
     };
+    
 
     try {
       const response = await fetch('http://localhost:4000/criar-fatura', {
@@ -21,7 +23,9 @@ function FaturaReserva() {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(invoiceData),
-      });
+        
+      }
+      );
       
 
       if (!response.ok) {
@@ -30,7 +34,7 @@ function FaturaReserva() {
 
       const blob = await response.blob();
       const url = URL.createObjectURL(blob);
-
+      console.log('mostra2')
       // Abrir o PDF em uma nova janela
       window.open(url, '_blank');
     } catch (error) {
