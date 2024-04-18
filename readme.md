@@ -60,4 +60,4 @@ Encryption: Optional
 
 O nome da base de dados é hotelnature_ mas é algo que pode ser editado posteriormente
 
-Para estabelecer coneção basta fazer "node db" no terminal do VS
+Para estabelecer coneção basta fazer "npm run startdb" no terminal do VS

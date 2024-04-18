@@ -4,7 +4,6 @@ const cors = require('cors');
 var app = express();
 var port = 4000;
 const blobStream = require('blob-stream');
-
 const PDFDocument = require('pdfkit')
 
 // Set up connection to database.
@@ -163,16 +162,17 @@ app.get('/pensao/:selectedPension', async (req, res) => {
 
 app.post('/criar-fatura', async (req, res) => {
     try {
-      const invoiceData = req.body;
+      //ERRRO AQUI, ESTA A MANDAR PARA A QUERY AO INVES DO BODY
+      const invoiceData = req.query;
+      console.log(req)
       const invoiceStream = generateInvoice(invoiceData);
-  
       res.setHeader('Content-Type', 'application/pdf');
-  
-      // Agora vamos lidar com o stream corretamente
+      
+      
       invoiceStream.on('data', (chunk) => {
         res.write(chunk);
       });
-  
+      
       invoiceStream.on('end', () => {
         res.end();
       });
@@ -191,7 +191,7 @@ app.post('/criar-fatura', async (req, res) => {
 function generateInvoice(invoice) {
     const doc = new PDFDocument();
     const stream = doc.pipe(blobStream());
-  
+    
     // Cabeçalho
     doc
       .fontSize(20)
@@ -218,7 +218,7 @@ function generateInvoice(invoice) {
     invoice.items.forEach((item, index) => {
       doc.text(`${index + 1}. ${item.name} - $${item.price}`);
     });
-  
+    
     // Subtotal
     const subtotal = invoice.items.reduce((acc, item) => acc + item.price, 0);
     doc.moveDown(1).text(`Subtotal: $${subtotal}`);

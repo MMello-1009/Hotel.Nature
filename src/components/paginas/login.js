@@ -85,14 +85,14 @@ const LoginPopup = () => {
             <br />
             <div className="login-content" style={{ display: showRegister ? 'none' : 'block' }}>
               <form onSubmit={handleSubmit}>
-                <label>Email:</label>
-                <input
+                <label className='label-login'>Email:</label>
+                <input className='input-login'
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                 />
-                <label>Password:</label>
-                <input
+                <label className='label-login'>Password:</label>
+                <input className='input-login'
                   type="password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
@@ -108,32 +108,32 @@ const LoginPopup = () => {
 
             <div className="register-content" style={{ display: showRegister ? 'block' : 'none' }}>
               <form onSubmit={handleRegisterSubmit}>
-              <label>Nome:</label>
-                <input
+              <label className='label-login'>Nome:</label>
+                <input className='input-login'
                   type="nome"
                   value={nome}
                   onChange={(e) => setNome(e.target.value)}
                 />
-                <label>Email:</label>
-                <input
+                <label className='label-login'>Email:</label>
+                <input className='input-login'
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                 />
-                <label>Telemóvel:</label>
-                <input
+                <label className='label-login'>Telemóvel:</label>
+                <input className='input-login'
                   type="tlm"
                   value={tlm}
                   onChange={(e) => setTlm(e.target.value)}
                 />
-                <label>NIF:</label>
-                <input
+                <label className='label-login'>NIF:</label>
+                <input className='input-login'
                   type="number"
                   value={nif}
                   onChange={(e) => setNif(e.target.value)}
                 />
-                <label>Password:</label>
-                <input
+                <label className='label-login'>Password:</label>
+                <input className='input-login'
                   type="password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
