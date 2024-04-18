@@ -19,65 +19,86 @@ function Adicionais() {
         <form>
           <h1>Pensões</h1>
           <h2>Escolha o tipo de regime pretendido para a sua estadia:</h2>
-          <table>
+          <table className="cardsebuttons">
             <tbody>
-              <tr>
-                <td>
-                  <h2>Alojamento</h2>
+              <tr className="pensoescard">
+                <td className="cardadicional">
+                  <h2 >Alojamento</h2>
                   <p>Pequeno-almoço incluído.</p>
                   <p>Grátis</p>
-                  <input 
-                    type="radio" 
-                    id="alojamento" 
-                    name="Pensão" 
+                  <input className="radioinput"
+                    type="radio"
+                    id="alojamento"
+                    name="Pensão"
                     value="alojamento"
                     checked={selectedPension === "alojamento"}
                     onChange={handlePensionChange}
                   />
                 </td>
-              </tr>
-              <tr>
-                <td>
+
+                <td className="cardadicional">
                   <h2>Meia pensão:</h2>
                   <p>Pequeno-almoço e 1 refeição incluida</p>
                   <p>Preço: 50€ por dia / pessoa</p>
-                  <input 
-                    type="radio" 
-                    id="meia-pensao" 
-                    name="Pensão" 
+                  <input className="radioinput"
+                    type="radio"
+                    id="meia-pensao"
+                    name="Pensão"
                     value="meia-pensao"
                     checked={selectedPension === "meia-pensao"}
                     onChange={handlePensionChange}
                   />
                 </td>
-              </tr>
-              <tr>
-                <td>
+
+                <td className="cardadicional">
                   <h2>Pensão Completa:</h2>
                   <p>Pequeno-almoço, Almoço e Jantar incluído.</p>
                   <p>Preço: 100€ por dia / pessoa</p>
-                  <input 
-                    type="radio" 
-                    id="pensao-completa" 
-                    name="Pensão" 
+                  <input className="radioinput"
+                    type="radio"
+                    id="pensao-completa"
+                    name="Pensão"
                     value="pensao-completa"
                     checked={selectedPension === "pensao-completa"}
                     onChange={handlePensionChange}
                   />
                 </td>
+
               </tr>
+              <table className="buttonsadicional" >
+                <tr>
+                  <td >
+                    <div>
+                      <Link to="/reserva" className="button1ad">Voltar</Link>
+                    </div>
+                  </td>
+                  <td>
+                    <div >
+                      <Link
+                        to={`/resumo?startDate=${format(startDate, 'yyyy-MM-dd')}&endDate=${format(endDate, 'yyyy-MM-dd')}&selectedRooms=${JSON.stringify(selectedRooms)}&selectedPension=${selectedPension}`}
+                        className="button1ad"
+                        onClick={(e) => {
+                          if (!selectedPension) {
+                            e.preventDefault();
+                            alert("Por favor, selecione um tipo de pensão antes de prosseguir.");
+                          }
+                        }}
+                      >
+                        Resumo
+                      </Link>
+                    </div>
+                  </td>
+                </tr>
+              </table>
             </tbody>
           </table>
         </form>
       </div>
-      
+
+
       {/* Botão de voltar */}
-      <div className="voltar">
-        <Link to="/reserva" className="button">Voltar</Link>
-      </div>
-      <div className="seguinte">
-        <Link to={`/resumo?startDate=${format(startDate, 'yyyy-MM-dd')}&endDate=${format(endDate, 'yyyy-MM-dd')}&selectedRooms=${JSON.stringify(selectedRooms)}&selectedPension=${selectedPension}`} className="button">Resumo</Link>
-      </div>
+
+
     </div>
   );
 }

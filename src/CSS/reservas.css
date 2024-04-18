@@ -2,6 +2,8 @@
   margin-bottom: 15px;
     .disponibilidade {
         background-color: #B4A76A;
+        
+        margin: 0 auto;
         .verificarbutton{
           background-color: #6F8854;
           border: 0;
@@ -15,6 +17,7 @@
           margin: 0;
           transform: translate(50%, 50%);
           transition: 0.3s;
+          border-radius: 5px;
 
           @media (max-width: 800px) {
             width: 60%;
@@ -44,6 +47,7 @@
     .checkin {
         color: #B4A76A;
         padding: 5%;
+        border-radius: 5px;
         border: #B4A76A;
     }
 

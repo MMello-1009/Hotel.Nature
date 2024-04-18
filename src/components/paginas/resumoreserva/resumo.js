@@ -16,6 +16,12 @@ function Resumo() {
   const [precopensao, setPrecoPensao] = useState(0);
   const [quartoNomes, setQuartoNomes] = useState([]);
   
+  const nomepensao = [
+    { selectedPension: "alojamento", title: "Alojamento" },
+    { selectedPension: "meia-pensao", title: "Meia Pensão" },
+    { selectedPension: "pensao-completa", title: "Pensão Completa" }
+  ];
+  
   useEffect(() => {
     const fetchNacionalidades = async () => {
       try {
@@ -134,7 +140,7 @@ function Resumo() {
   </span>
 ))}
             </p>
-            <p>Pensão: {selectedPension}</p>
+            <p>Pensão: {nomepensao.find(item => item.selectedPension === selectedPension)?.title}</p>
             <p>Preço total: €{precoTotal}</p>
           </td>
         </tr>

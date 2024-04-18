@@ -1,10 +1,75 @@
-.adicionais{
-    display: flex;
-    justify-content: space-between;
+.adicionais {
+
+    
+    width: 100%;
     margin-top: 20px;
-    .Pensoes h1{
+    font-family: 'Belleza';
+    font-size: 20px;
+    color: #333;
+    margin: 0 auto;
+    text-align: center;
+
+    .Pensoes h1 {
         font-family: 'Belleza';
         font-size: 20px;
         color: #333;
+    }
+    .buttonsadicional{
+        width: 30%;
+        margin: 0 auto;
+        margin-top: 20px;
+        margin-bottom: 20px;
+        
+        
+
+    }
+
+    .cardsebuttons{
+        width: 100%; /* Adjust width as needed */
+    }
+    .pensoescard{
+        display: flex;
+        
+        td{
+            
+            margin-top: 20px;
+            text-align: center;
+            margin-right: 10px;
+            margin: 0 auto;
+            
+        }
+        
+        /* Adiciona flex para colocar os cartões na horizontal */
+
+        
+
+        .cardadicional{
+            margin: 0 auto;
+            width: 30%;
+            background-color: #fff;
+            border-radius: 10px;
+            padding: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 10px;
+            
+        }
+        
+        
+    }
+    .button1ad{
+        background-color: rgba(102, 133, 69, 0.769);
+        padding: 20px ;
+        border: none;
+        color: white;
+        font-family: 'Belleza';
+        font-size: large;
+        margin-left: 10px;
+        transition: 0.3s;
+        text-decoration: none;
+        border-radius: 10px;
+    }
+    .button1ad:hover{
+        background-color: rgba(128, 168, 86, 0.769);
+        border-radius: 10px;
     }
 }
