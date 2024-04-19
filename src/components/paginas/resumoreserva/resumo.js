@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import '../../../CSS/resumo.css';
+import { redirect } from "react-router-dom";
 function Resumo() {
   const urlParams = new URLSearchParams(window.location.search);
   const startDate = new Date(urlParams.get('startDate'));
@@ -15,6 +16,11 @@ function Resumo() {
   const [precoquarto, setPrecoQuarto] = useState(0);
   const [precopensao, setPrecoPensao] = useState(0);
   const [roomTitle, setRoomTitle] = useState("");
+  const [telemovel, setTelemovel] = useState('');
+
+  const [email, setEmail] = useState('');
+  const [enviado, setEnviado] = useState(false);
+
 
   const nomepensao = [
     { selectedPension: "alojamento", title: "Alojamento" },
@@ -23,12 +29,57 @@ function Resumo() {
   ];
 
   const quartoNomes = [
-    { Id_tipo: 1, title: "Suite" },
-    { Id_tipo: 2, title: "Duplo" },
-    { Id_tipo: 3, title: "Twin" },
-    { Id_tipo: 4, title: "Suite Familiar" },
-    { Id_tipo: 5, title: "Solteiro" }
+    { Id_tipo: 1, title: "Suite" , people:2},
+    { Id_tipo: 2, title: "Duplo", people:2 },
+    { Id_tipo: 3, title: "Twin" , people:2},
+    { Id_tipo: 4, title: "Suite Familiar", people:4 },
+    { Id_tipo: 5, title: "Solteiro", people:1 }
   ];
+
+  const handleMail = async (e) => {
+    e.preventDefault();
+
+    // Verificar se algum campo está vazio
+    if (!email) {
+      alert('Preencha todos os campos antes de enviar o e-mail.');
+      return;
+    }
+
+    try {
+      const response = await fetch('http://localhost:3001/enviaresumo', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ email }),
+      });
+
+      if (response.ok) {
+        alert('A sua reserva foi efetuada com sucesso!\n Iremos enviar a fatura para o email fornecido.\n Obrigado!');
+        setEnviado(true); // Define enviado como verdadeiro se a resposta do servidor for bem-sucedida
+        // Limpar campos do formulário após o envio
+        setEmail('');
+        window.location.href = '/';
+
+      } else {
+        throw new Error('Erro ao enviar email');
+      }
+    } catch (error) {
+      console.error('Erro ao enviar email:', error);
+      alert('Erro ao enviar email. Por favor, tente novamente mais tarde.');
+    }
+  };
+
+  const calculateTotalPessoas = (selectedRooms, quartoNomes) => {
+    let totalPessoas = 0;
+    Object.entries(selectedRooms).forEach(([roomId, count]) => {
+      const room = quartoNomes.find(room => room.Id_tipo === parseInt(roomId));
+      if (room) {
+        totalPessoas += room.people * count;
+      }
+    });
+    return totalPessoas;
+  };
 
   const getRoomTitle = (roomId) => {
     // Find the room title in quartoNomes based on roomId
@@ -44,9 +95,9 @@ function Resumo() {
       setRoomTitle(title);
     }
   }, [selectedRooms]);
-  
 
-  
+
+
   useEffect(() => {
     const fetchNacionalidades = async () => {
       try {
@@ -56,6 +107,8 @@ function Resumo() {
         }
         const data = await response.json();
         const nacionalidadesList = data.map((pais) => pais.name.common);
+        // Ordenar a lista de nacionalidades por ordem alfabética
+        nacionalidadesList.sort();
         setNacionalidades(nacionalidadesList);
       } catch (error) {
         console.error(error);
@@ -118,10 +171,10 @@ function Resumo() {
   return (
     <div className="resumocss">
       <h1>Resumo da Reserva</h1>
-      <table style={{alignContent:'center', width:'100%'}}>
+      <table style={{ alignContent: 'center', width: '100%' }}>
         <tr>
-          <td style={{alignContent:'center', width:'50%'}}>
-            <form>
+          <td style={{ alignContent: 'center', width: '50%' }}>
+            <form onSubmit={handleMail}>
               <h2>Dados do Cliente:</h2>
               <label htmlFor="name" className="lblreserva">Nome:</label>
               <br></br>
@@ -129,7 +182,7 @@ function Resumo() {
               <br></br><br></br>
               <label htmlFor="email" className="lblreserva">Email:</label>
               <br></br>
-              <input type="email" id="email" name="email" className="inputreserva" required />
+              <input type="email" id="email" name="email" className="inputreserva" onChange={(e) => setEmail(e.target.value)} required />
               <br></br><br></br>
               <label htmlFor="phone" className="lblreserva">Telefone:</label>
               <br></br>
@@ -157,24 +210,27 @@ function Resumo() {
               <br></br>
               <br></br>
               <button type="submit" className="button1reserva">Reservar</button>
+              {enviado && <p onClick={() => setEnviado(false)}></p>}
             </form>
           </td>
-          <td style={{alignContent:'center', width:'35%'}}>
+          <td style={{ alignContent: 'center', width: '35%' }}>
             <div className="divresumo">
               <p>Detalhes da reserva:</p>
               <p>Check-in: {startDate.toLocaleDateString()} </p>
               <p>Check-out: {endDate.toLocaleDateString()} </p>
               <p>
                 Quartos reservados:{" "}
+                <br></br>
                 {Object.entries(selectedRooms).map(([roomId, count], index) => (
                   <span key={index}>
-                    {count} Quarto{count > 1 ? "s" : ""}  {roomTitle}
-
-                    {index < Object.entries(selectedRooms).length - 1 && ", "}
+                    {count} Quarto{count > 1 ? "s" : ""} {getRoomTitle(parseInt(roomId))}
+                    <br></br>
+                    {index < Object.entries(selectedRooms).length - 1 && ""}
                   </span>
                 ))}
               </p>
               <p>Pensão: {nomepensao.find(item => item.selectedPension === selectedPension)?.title}</p>
+              <p>Número de Pessoas: {calculateTotalPessoas(selectedRooms, quartoNomes)}</p>
               <p>Preço total: €{precoTotal}</p>
             </div>
           </td>

@@ -35,16 +35,19 @@ app.use(cors(
     }
 ));
 
+
+
 app.get('/login', async (req, res) => {
     const { email } = req.query;
     try {
         const request = new mssql.Request();
         let liga = `SELECT * FROM utilizadores`;
         if (email) {
-            liga = `SELECT * FROM utilizadores WHERE Email='${email} AND Id_tipo = 3'`;
+            liga = `SELECT * FROM utilizadores WHERE Email='`+email+`' AND Id_tipo = 3`;
         }
         const result = await request.query(liga);
         res.json(result.recordset);
+        console.log(result.recordset);
     } catch (err) {
         console.error('Error executing query:', err);
         res.status(500).json({ error: 'Erro a obter dados' });
