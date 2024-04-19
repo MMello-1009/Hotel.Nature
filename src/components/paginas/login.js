@@ -106,7 +106,7 @@ const LoginPopup = () => {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                 />
-                <button className="login-submit" type="submit">
+                <button className="loginsubmit" type="submit">
                   Login
                 </button>
                 <button className="register-toggle" type="button" onClick={toggleRegister}>
