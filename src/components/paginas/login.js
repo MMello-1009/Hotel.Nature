@@ -12,23 +12,32 @@ const LoginPopup = () => {
 
   const handleLogin = async () => {
     try {
+      console.log('Iniciando a função handleLogin');
+
       const response = await fetch(`http://localhost:4000/login?email=${email}`);
 
       if (!response.ok) {
         throw new Error('Erro ao fazer login');
       }
-
+      
       const data = await response.json();
+      console.log('Dados do usuário do banco de dados:', data[0]);
+
       if (data[0] === undefined) {
+        console.log('Email não encontrado no banco de dados:', email);
         alert('Email Inválido');
-      }
-      else {
+      } else {
         let { Email, Pass } = data[0];
         console.log('Dados do usuário:', Email, Pass);
 
-        if (email == Email && password == Pass) {
+        console.log('Email do banco de dados:', Email);
+        console.log('Email inserido no formulário:', email);
+
+        if (email === Email && password === Pass) {
+          console.log('Email e senha coincidem');
           alert('Login Efetuado com Sucesso!');
-        }else {
+        } else {
+          console.log('Email e/ou senha incorretos');
           alert('Password Inválida!');
         }
       }

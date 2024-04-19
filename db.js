@@ -58,7 +58,7 @@ app.post('/register', async (req, res) => {
     const { Email, Pass, nif, Telemovel, NomeCli } = req.query;
     console.log(req.query);
     try {
-        console.log('mostra')
+        
         const query = `INSERT INTO utilizadores (Id_tipo, Email, Pass) VALUES (3, '${Email}', '${Pass}')`;
         const request = new mssql.Request();
         const result = await request.query(query);
