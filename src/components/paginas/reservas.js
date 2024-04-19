@@ -114,9 +114,9 @@ function Reservas() {
   return (
     <div className="reservas-container">
       <div className="disponibilidade">
-        <table>
-          <td>
-            <div className="divcheckin">
+        <table className="disponibilidade">
+          <td className="celldate">
+            <div className="divcheckout">
               <label htmlFor="checkin" className="textoalt">Check In</label>
               <DatePicker
                 id="checkin"
@@ -130,7 +130,7 @@ function Reservas() {
               />
             </div>
           </td>
-          <td>
+          <td className="celldate">
             <div className="divcheckout">
               <p className="textoalt">Check Out</p>
               <DatePicker
