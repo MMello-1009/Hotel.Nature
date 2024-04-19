@@ -41,7 +41,7 @@ app.get('/login', async (req, res) => {
         const request = new mssql.Request();
         let liga = `SELECT * FROM utilizadores`;
         if (email) {
-            liga = `SELECT * FROM utilizadores WHERE Email='${email} AND Id_tipo = 3'`;
+            liga = `SELECT * FROM utilizadores WHERE Email='`+email+`' AND Id_tipo = 3`;
         }
         const result = await request.query(liga);
         res.json(result.recordset);
@@ -55,7 +55,7 @@ app.post('/register', async (req, res) => {
     const { Email, Pass, nif, Telemovel, NomeCli } = req.query;
     console.log(req.query);
     try {
-        console.log('mostra')
+        
         const query = `INSERT INTO utilizadores (Id_tipo, Email, Pass) VALUES (3, '${Email}', '${Pass}')`;
         const request = new mssql.Request();
         const result = await request.query(query);
