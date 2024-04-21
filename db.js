@@ -48,6 +48,7 @@ app.get('/login', async (req, res) => {
         const result = await request.query(liga);
         res.json(result.recordset);
         console.log(result.recordset);
+        
     } catch (err) {
         console.error('Error executing query:', err);
         res.status(500).json({ error: 'Erro a obter dados' });
@@ -78,6 +79,63 @@ app.post('/register', async (req, res) => {
     }
 });
 
+app.get('/editprofile/:Email', async (req, res) => {
+  const { Email } = req.params;
+
+  try {
+    const query = `SELECT Nif_Cli, NomeCli, Telemovel FROM clientes WHERE Email = '${Email}'`;
+    const request = new mssql.Request();
+    const result = await request.query(query);
+
+    // Verifica se encontrou o cliente com o email fornecido
+    if (result.recordset.length === 0) {
+      return res.status(404).json({ error: 'Cliente não encontrado' });
+    }
+
+    // Retorna os detalhes do cliente como resposta
+    res.status(200).json(result.recordset[0]);
+  } catch (err) {
+    console.error('Erro ao buscar perfil do cliente:', err);
+    res.status(500).json({ error: 'Erro ao buscar perfil do cliente' });
+  }
+});
+
+app.post('/updateprofile/:email', async (req, res) => {
+  const { email } = req.params;
+  const { nif, NomeCli, Telemovel } = req.body;
+
+  try {
+    // Verifique se todos os campos necessários foram fornecidos no corpo da solicitação
+    if (!nif || !NomeCli || !Telemovel) {
+      return res.status(400).json({ error: 'Por favor, forneça todos os campos necessários' });
+    }
+
+    // Execute a atualização no banco de dados
+    const query = `
+      UPDATE clientes
+      SET Nif_Cli = @nif,
+          NomeCli = @NomeCli,
+          Telemovel = @Telemovel
+      WHERE Email = @email
+    `;
+
+    const request = new mssql.Request();
+    await request.input('nif', mssql.Int, nif)
+                 .input('NomeCli', mssql.NVarChar, NomeCli)
+                 .input('Telemovel', mssql.NVarChar, Telemovel)
+                 .input('email', mssql.NVarChar, email)
+                 .query(query);
+
+    res.status(200).json({ message: 'Perfil atualizado com sucesso' });
+  } catch (err) {
+    console.error('Erro ao atualizar perfil do cliente:', err);
+    res.status(500).json({ error: 'Erro ao atualizar perfil do cliente' });
+  }
+});
+
+
+ 
+
 app.get('/availability', async (req, res) => {
     const { startDate, endDate } = req.query;
     console.log('startDate:', startDate);
@@ -89,10 +147,10 @@ app.get('/availability', async (req, res) => {
         SELECT
         quartos.Id_tipo,COUNT(quartos.Id_tipo) AS Lotacao , tipo_quarto.Descricao
     FROM quartos inner join tipo_quarto on quartos.Id_tipo = tipo_quarto.Id_tipo
-    WHERE quartos.Id_tipo NOT IN (
+    WHERE quartos.Id_quarto NOT IN (
         SELECT reservas_quarto.Id_quarto
         FROM reservas_quarto
-        WHERE reservas_quarto.Data_inicio >= '`+startDate+`' AND reservas_quarto.Data_fim <= '`+endDate+`'
+        WHERE reservas_quarto.Data_inicio > '`+startDate+`' AND reservas_quarto.Data_fim < '`+endDate+`'
     )
     group by quartos.Id_tipo, tipo_quarto.Descricao`;
 
@@ -137,6 +195,51 @@ app.get('/precos/:roomId', async (req, res) => {
     }
   });
 
+  app.post('/addreserva', async (req, res) => {
+    const { email, nif, tlm, nome, precoTotal, startDate, endDate, totalPessoas, selectedRooms, idPensao } = req.body;
+
+    try {
+        // Inserir os dados do usuário e obter o ID da reserva
+        const insertUserQuery = `INSERT INTO reservas (Nif_Cli, Preco, Data_inicio, Data_fim, Num_pessoas) 
+                                VALUES ('${nif}', '${precoTotal}', '${startDate}', '${endDate}', '${totalPessoas}')`;
+        const request = new mssql.Request();
+        const userResult = await request.query(insertUserQuery);
+
+        // Obter o ID da reserva recém-inserida
+        const maxReservaQuery = 'SELECT MAX(Id_reserva) as MAX FROM reservas';
+        const maxReservaResult = await request.query(maxReservaQuery);
+        const { MAX } = maxReservaResult.recordset[0];
+
+                // Verificar se há disponibilidade para o quarto nesta data
+                const maxidQuarto = `SELECT quartos.Id_quarto AS MAXQuarto 
+                                    FROM quartos 
+                                    LEFT JOIN reservas_quarto ON reservas_quarto.Id_quarto = quartos.Id_quarto
+                                    WHERE quartos.Id_quarto NOT IN (
+                                        SELECT Id_quarto 
+                                        FROM reservas_quarto 
+                                        WHERE Data_inicio = '${startDate}' AND Data_fim = '${endDate}'
+                                    ) AND Id_tipo = '${roomId}'
+                                    GROUP BY quartos.Id_quarto`;
+                const maxidQuartoResult = await request.query(maxidQuarto);
+                if (maxidQuartoResult.recordset.length > 0) {
+                    const { MAXQuarto } = maxidQuartoResult.recordset[0];
+
+                    // Inserir os detalhes do quarto na tabela reservas_quarto
+                    const insertRoomQuery = `INSERT INTO reservas_quarto (Id_quarto, Id_reserva, Id_regime, Data_inicio, Data_fim) 
+                                            VALUES ('${MAXQuarto}', '${MAX}', ${idPensao}, '${startDate}', '${endDate}')`;
+                    await request.query(insertRoomQuery);
+                } else {
+                    throw new Error(`Não há disponibilidade para o quarto ${roomId} nesta data.`);
+                }
+
+        res.status(201).json({ message: 'Reserva efetuada com sucesso' });
+    } catch (err) {
+        console.error('Erro ao executar a query:', err);
+        res.status(500).json({ error: 'Erro ao efetuar a reserva', message: err.message });
+    }
+});
+
+
 app.get('/pensao/:selectedPension', async (req, res) => {
     const { selectedPension } = req.params; // Usar req.params para obter o parâmetro selectedPension
     
@@ -163,96 +266,7 @@ app.get('/pensao/:selectedPension', async (req, res) => {
 
 
 
-app.post('/criar-fatura', async (req, res) => {
-    try {
-      //ERRRO AQUI, ESTA A MANDAR PARA A QUERY AO INVES DO BODY
-      const invoiceData = req.query;
-      console.log(req)
-      const invoiceStream = generateInvoice(invoiceData);
-      res.setHeader('Content-Type', 'application/pdf');
-      
-      
-      invoiceStream.on('data', (chunk) => {
-        res.write(chunk);
-      });
-      
-      invoiceStream.on('end', () => {
-        res.end();
-      });
-  
-      invoiceStream.on('error', (error) => {
-        console.error('Erro ao gerar fatura:', error);
-        res.status(500).json({ error: 'Erro ao gerar fatura' });
-      });
-    } catch (error) {
-      console.error('Erro ao gerar fatura:', error);
-      res.status(500).json({ error: 'Erro ao gerar fatura' });
-    }
-  });
 
-// Função para gerar o PDF da fatura
-function generateInvoice(invoice) {
-    const doc = new PDFDocument();
-    const stream = doc.pipe(blobStream());
-    
-    // Cabeçalho
-    doc
-      .fontSize(20)
-      .text('Fatura', { align: 'center' })
-      .fontSize(10)
-      .text('Endereço da Empresa', { align: 'center', width: 500 })
-      .text('Cidade, Estado, CEP', { align: 'center', width: 500 })
-      .moveDown(2);
-  
-    // Informações do Cliente
-    doc
-      .fontSize(12)
-      .text(`Cliente: ${invoice.customerName}`)
-      .text(`Endereço: ${invoice.address}`)
-      .text(`Email: ${invoice.email}`)
-      .moveDown(1);
-  
-    // Lista de Itens
-    doc
-      .fontSize(12)
-      .text('Lista de Itens:', { underline: true })
-      .moveDown(0.5);
-  
-    invoice.items.forEach((item, index) => {
-      doc.text(`${index + 1}. ${item.name} - $${item.price}`);
-    });
-    
-    // Subtotal
-    const subtotal = invoice.items.reduce((acc, item) => acc + item.price, 0);
-    doc.moveDown(1).text(`Subtotal: $${subtotal}`);
-  
-    // Imposto
-    const taxRate = 0.23; // 23% de imposto
-    const tax = subtotal * taxRate;
-    doc.text(`Imposto (23%): $${tax}`);
-  
-    // Total
-    const total = subtotal + tax;
-    doc.moveDown(1).text(`Total: $${total}`, { bold: true });
-  
-    // Rodapé
-    doc
-      .fontSize(10)
-      .text('Obrigado por fazer negócios conosco!', { align: 'center', width: 500 })
-      .moveDown(1)
-      .text('Contato: email@empresa.com', { align: 'center', width: 500 });
-  
-    // Finalizar o PDF
-    doc.end();
-  
-    return stream;
-  }
-
-
-app.use((err, req, res, next) => {
-    console.error('Erro no servidor:', err);
-    res.status(500).json({ error: 'Erro interno no servidor' });
-});
 
 
 app.listen(port, () => {

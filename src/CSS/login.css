@@ -20,6 +20,24 @@
   .login-button:hover {
     background-color: #b4a66ac7;
   }
+
+  .logged-in{
+    background-color: #B4A76A;
+    color: white;
+    padding: 5px 10px;
+    font-size: 15px;
+    transition: 0.3s;
+    font-family: 'Belleza';
+    border: none;
+    text-decoration: none;
+    margin-left: 0 auto;
+    border-radius: 5px;
+  }
+
+  .logged-in:hover {
+    background-color: #b4a66ac7;
+    cursor: pointer;
+  }
   
   .close-button {
     position: absolute;
@@ -120,4 +138,13 @@
   
   .register-submit:hover {
     background-color: #6f8854b0;
+  }
+
+  .ddlMenu {
+    
+    
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
   }

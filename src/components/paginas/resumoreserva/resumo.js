@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import '../../../CSS/resumo.css';
 import { redirect } from "react-router-dom";
+
+
 function Resumo() {
   const urlParams = new URLSearchParams(window.location.search);
   const startDate = new Date(urlParams.get('startDate'));
@@ -17,24 +19,52 @@ function Resumo() {
   const [precopensao, setPrecoPensao] = useState(0);
   const [roomTitle, setRoomTitle] = useState("");
   const [telemovel, setTelemovel] = useState('');
+  const [nome, setNome] = useState('');
+  const [nif, setNif] = useState('');
+  const [tlm, setTlm] = useState('');
+  const [totalPessoas, setTotalPessoas] = useState();
+
+
+
 
   const [email, setEmail] = useState('');
   const [enviado, setEnviado] = useState(false);
 
 
   const nomepensao = [
-    { selectedPension: "alojamento", title: "Alojamento" },
-    { selectedPension: "meia-pensao", title: "Meia Pensão" },
-    { selectedPension: "pensao-completa", title: "Pensão Completa" }
+    { id:1, selectedPension: "alojamento", title: "Alojamento" },
+    { id:2,selectedPension: "meia-pensao", title: "Meia Pensão" },
+    { id:3,selectedPension: "pensao-completa", title: "Pensão Completa" }
   ];
 
   const quartoNomes = [
-    { Id_tipo: 1, title: "Suite" , people:2},
-    { Id_tipo: 2, title: "Duplo", people:2 },
-    { Id_tipo: 3, title: "Twin" , people:2},
-    { Id_tipo: 4, title: "Suite Familiar", people:4 },
-    { Id_tipo: 5, title: "Solteiro", people:1 }
+    { Id_tipo: 1, title: "Suite", people: 2 },
+    { Id_tipo: 2, title: "Duplo", people: 2 },
+    { Id_tipo: 3, title: "Twin", people: 2 },
+    { Id_tipo: 4, title: "Suite Familiar", people: 4 },
+    { Id_tipo: 5, title: "Solteiro", people: 1 }
   ];
+
+  const handleSearchProfile = async () => {
+    try {
+
+      const storedEmail = localStorage.getItem('email');
+      const response = await fetch(`http://localhost:4000/editprofile/${storedEmail}`);
+      if (!response.ok) {
+        throw new Error('Erro ao obter dados do perfil para edição');
+      }
+      const userData = await response.json();
+      console.log(userData); // Verifica os dados do perfil obtidos da API
+      console.log(userData); // Verifica os dados do perfil obtidos da API
+      setNome(userData.NomeCli); // Atribui o nome do usuário ao estado 'nome'
+      setTlm(userData.Telemovel); // Atribui o telefone do usuário ao estado 'tlm'
+      setNif(userData.Nif_Cli);
+      setEmail(storedEmail);
+    } catch (error) {
+      console.error('Erro ao obter:', error);
+    }
+  };
+
 
   const handleMail = async (e) => {
     e.preventDefault();
@@ -46,29 +76,86 @@ function Resumo() {
     }
 
     try {
-      const response = await fetch('http://localhost:3001/enviaresumo', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ email }),
-      });
+      const roomIds = Object.keys(selectedRooms);
+      const roomId = roomIds[0];
+      const idPensao = nomepensao.find(item => item.selectedPension === selectedPension)?.id;
 
-      if (response.ok) {
-        alert('A sua reserva foi efetuada com sucesso!\n Iremos enviar a fatura para o email fornecido.\n Obrigado!');
-        setEnviado(true); // Define enviado como verdadeiro se a resposta do servidor for bem-sucedida
-        // Limpar campos do formulário após o envio
-        setEmail('');
-        window.location.href = '/';
 
-      } else {
-        throw new Error('Erro ao enviar email');
+      // Insert each room individually into the database
+      const insertions = [];
+      for (let i = 0; i < selectedRooms[roomId]; i++) {
+        const reservation = await fetch('http://localhost:4000/addreserva', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            email,
+            nome,
+            tlm,
+            nif,
+            selectedNacionalidade,
+            selectedRoom: roomId, // Pass individual roomId
+            idPensao,
+            precoTotal,
+            startDate,
+            endDate,
+            totalPessoas
+          }),
+        });
+
+        if (!reservation.ok) {
+          throw new Error('Erro ao adicionar reserva');
+        }
+        
+
+        insertions.push(await reservation.json());
+        console.log(insertions);
       }
+
+      if (insertions.length === 0) {
+        throw new Error('Erro ao adicionar reserva');
+      }
+      else {
+        const response = await fetch('http://localhost:3001/enviaresumo', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            email,
+            nome,
+            tlm,
+            nif,
+            selectedNacionalidade,
+            selectedRooms,
+            selectedPension,
+            precoTotal,
+            startDate,
+            endDate,
+            totalPessoas
+          }),
+        });
+
+        if (!response.ok) {
+          throw new Error('Erro ao enviar email');
+        }
+      }
+      // Assuming only one room is selected
+
+
+      alert('A sua reserva foi efetuada com sucesso!\n Iremos enviar a fatura para o email fornecido.\n Obrigado!');
+      setEnviado(true);
+      setEmail('');
+      window.location.href = '/';
     } catch (error) {
       console.error('Erro ao enviar email:', error);
       alert('Erro ao enviar email. Por favor, tente novamente mais tarde.');
     }
   };
+
+
+
 
   const calculateTotalPessoas = (selectedRooms, quartoNomes) => {
     let totalPessoas = 0;
@@ -80,6 +167,12 @@ function Resumo() {
     });
     return totalPessoas;
   };
+
+  useEffect(() => {
+    // Calcular o número total de pessoas
+    const totalPessoas = calculateTotalPessoas(selectedRooms, quartoNomes);
+    setTotalPessoas(totalPessoas);
+  }, [selectedRooms]);
 
   const getRoomTitle = (roomId) => {
     // Find the room title in quartoNomes based on roomId
@@ -162,6 +255,7 @@ function Resumo() {
   }, [selectedPension]);
 
   useEffect(() => {
+    handleSearchProfile();
     // Update total price whenever quartoPreco or pensaoPreco changes
     setPrecoTotal((quartoPreco + pensaoPreco) * noites);
   }, [quartoPreco, pensaoPreco]);
@@ -169,7 +263,7 @@ function Resumo() {
 
 
   return (
-    <div className="resumocss">
+    <div className="resumocss" >
       <h1>Resumo da Reserva</h1>
       <table style={{ alignContent: 'center', width: '100%' }}>
         <tr>
@@ -178,15 +272,15 @@ function Resumo() {
               <h2>Dados do Cliente:</h2>
               <label htmlFor="name" className="lblreserva">Nome:</label>
               <br></br>
-              <input type="text" id="name" name="name" className="inputreserva" required />
+              <input type="text" id="name" name="name" className="inputreserva" value={nome} onChange={(e) => setNome(e.target.value)} required />
               <br></br><br></br>
               <label htmlFor="email" className="lblreserva">Email:</label>
               <br></br>
-              <input type="email" id="email" name="email" className="inputreserva" onChange={(e) => setEmail(e.target.value)} required />
+              <input type="email" id="email" name="email" className="inputreserva" value={email} onChange={(e) => setEmail(e.target.value)} required />
               <br></br><br></br>
-              <label htmlFor="phone" className="lblreserva">Telefone:</label>
+              <label htmlFor="phone" className="lblreserva" >Telefone:</label>
               <br></br>
-              <input type="tel" id="phone" name="phone" className="inputreserva" required />
+              <input type="tel" id="phone" name="phone" className="inputreserva" value={tlm} onChange={(e) => setEmail(e.target.value)} required />
               <br></br><br></br>
               <label htmlFor="nacionalidade" className="lblreserva">Nacionalidade:</label>
               <br></br>
@@ -206,7 +300,7 @@ function Resumo() {
               <br></br><br></br>
               <label htmlFor="nif" className="lblreserva">NIF:</label>
               <br></br>
-              <input type="text" id="nif" name="nif" className="inputreserva" />
+              <input type="text" id="nif" name="nif" className="inputreserva" value={nif} onChange={(e) => setEmail(e.target.value)} />
               <br></br>
               <br></br>
               <button type="submit" className="button1reserva">Reservar</button>
@@ -230,7 +324,7 @@ function Resumo() {
                 ))}
               </p>
               <p>Pensão: {nomepensao.find(item => item.selectedPension === selectedPension)?.title}</p>
-              <p>Número de Pessoas: {calculateTotalPessoas(selectedRooms, quartoNomes)}</p>
+              <p>Número de Pessoas: {totalPessoas}</p>
               <p>Preço total: €{precoTotal}</p>
             </div>
           </td>

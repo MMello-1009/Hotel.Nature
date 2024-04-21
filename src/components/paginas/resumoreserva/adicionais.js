@@ -78,12 +78,19 @@ function Adicionais() {
                         to={`/resumo?startDate=${format(startDate, 'yyyy-MM-dd')}&endDate=${format(endDate, 'yyyy-MM-dd')}&selectedRooms=${JSON.stringify(selectedRooms)}&selectedPension=${selectedPension}`}
                         className="button1ad"
                         onClick={(e) => {
+                          const log=localStorage.getItem('loggedIn');
+                          console.log(log);
+                          if(log === 'false' || log === null) {
+                            e.preventDefault();
+                            alert("Por favor, faça login antes de prosseguir.");
+                          }
+                          else{
                           if (!selectedPension) {
                             e.preventDefault();
                             alert("Por favor, selecione um tipo de pensão antes de prosseguir.");
                           }
-                        }}
-                      >
+                        }
+                        }}>
                         Resumo
                       </Link>
                     </div>

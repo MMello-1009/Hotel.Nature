@@ -4,6 +4,9 @@ import "react-datepicker/dist/react-datepicker.css";
 import DatePicker from "react-datepicker";
 import { Link } from "react-router-dom";
 import { format } from 'date-fns';
+import Popup from "reactjs-popup";
+import "reactjs-popup/dist/index.css";
+
 
 function Reservas() {
   const [startDate, setStartDate] = useState(new Date());
@@ -14,6 +17,9 @@ function Reservas() {
   const [price, setPrice] = useState(false);
   const [availableRooms, setAvailableRooms] = useState([]);
   const [showWarning, setShowWarning] = useState(false); // Variável de estado para controlar a exibição do alerta
+  const [popupOpen, setPopupOpen] = useState(false);
+  const [selectedPopup, setSelectedPopup] = useState(null);
+
 
   const today = new Date();
   const minEndDate = new Date(startDate.getTime() + 24 * 60 * 60 * 1000); // Adiciona um dia à startDate
@@ -27,24 +33,48 @@ function Reservas() {
     { Id_tipo: 5, title: "Quarto Solteiro", value: 300, area: "18m²", capacity: "1 Pessoa", bedType: "Cama de Solteiro", amenities: ["Ar condicionado", "Pequeno-Almoço incluído", "Parque gratuito", "TV LCD", "Internet Wi-Fi"] }
   ];
 
+  const PerguntaPopUp = () => {
+    const handleSubmit = (event) => {
+      event.preventDefault();
+    };
+
+    return (
+      <div className="popup">
+        <button className="close-button" onClick={() => setPopupOpen(false)} >&times;</button>
+        <div className="header">Parece que ainda não fez o Login</div>
+        <br />
+        <div className="content">
+          <button>Login</button>
+        </div>
+      </div>
+    );
+  };
+
   const handleFinalizar = async () => {
-    try {
-      const formattedStartDate = format(startDate, 'yyyy/MM/dd');
-      const formattedEndDate = format(endDate, 'yyyy/MM/dd');
+    
 
-      console.log("Detalhes da reserva:", formattedStartDate, formattedEndDate, selectedRooms);
-      // Resetar o estado após a reserva
 
-      setSelectedRooms({});
-      setTotalPrice(0);
-      setWarning(false);
-      setPrice(false);
-      // Redirecionar o usuário para a página de adicionais
+      try {
+        const formattedStartDate = format(startDate, 'yyyy/MM/dd');
+        const formattedEndDate = format(endDate, 'yyyy/MM/dd');
 
-    } catch (error) {
-      console.error("Erro ao fazer reserva:", error);
-      // Tratar erros de reserva, se necessário
-    }
+        console.log("Detalhes da reserva:", formattedStartDate, formattedEndDate, selectedRooms);
+        // Resetar o estado após a reserva
+
+        setSelectedRooms({});
+        setTotalPrice(0);
+        setWarning(false);
+        setPrice(false);
+        // Redirecionar o usuário para a página de adicionais
+        
+
+
+
+      } catch (error) {
+        console.error("Erro ao fazer reserva:", error);
+        // Tratar erros de reserva, se necessário
+      }
+    
   };
 
   const handleReserve = (roomId, value) => {
@@ -64,7 +94,11 @@ function Reservas() {
   };
 
   const Availability = async () => {
+
+
     try {
+    
+
       const formattedStartDate = startDate.toISOString().split('T')[0];
       const formattedEndDate = endDate.toISOString().split('T')[0];
       const response = await fetch(`http://localhost:4000/availability?startDate=${formattedStartDate}&endDate=${formattedEndDate}`);
@@ -221,6 +255,7 @@ function Reservas() {
               </td>
             </tr>
           </table>
+
         </div>
       )}
 

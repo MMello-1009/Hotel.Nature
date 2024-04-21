@@ -11,6 +11,7 @@ const Navbar = () => {
     setOpen(!open); // Toggle the 'open' state on button click
 
   };
+
   return (
     <nav className="navbar" style={{ backgroundColor: '#fff', width: '100%' }}>
       <Link to="/" className="nav-logo">
@@ -66,7 +67,7 @@ const Navbar = () => {
           </Link>
         </li>
         <li className="nav-item">
-          <LoginPopup />
+          <LoginPopup/>
         </li>
       </ul>
 
