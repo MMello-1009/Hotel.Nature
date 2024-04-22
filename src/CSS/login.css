@@ -160,5 +160,14 @@
       cursor: pointer;
       margin-right: 5vw;
     }
-    
-  }
+}
+.btnedit-save
+{
+  background-color: #B4A76A;
+    color: white;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-right: 5vw;
+}
