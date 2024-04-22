@@ -200,37 +200,50 @@ app.get('/precos/:roomId', async (req, res) => {
 
     try {
         // Inserir os dados do usuário e obter o ID da reserva
-        const insertUserQuery = `INSERT INTO reservas (Nif_Cli, Preco, Data_inicio, Data_fim, Num_pessoas) 
-                                VALUES ('${nif}', '${precoTotal}', '${startDate}', '${endDate}', '${totalPessoas}')`;
+        const insertUserQuery = `
+            INSERT INTO reservas (Nif_Cli, Preco, Data_inicio, Data_fim, Num_pessoas) 
+            VALUES ('${nif}', '${precoTotal}', '${startDate}', '${endDate}', '${totalPessoas}');
+            SELECT SCOPE_IDENTITY() as Id_reserva;
+        `;
         const request = new mssql.Request();
         const userResult = await request.query(insertUserQuery);
+        const reservaId = userResult.recordset[0].Id_reserva;
 
-        // Obter o ID da reserva recém-inserida
-        const maxReservaQuery = 'SELECT MAX(Id_reserva) as MAX FROM reservas';
-        const maxReservaResult = await request.query(maxReservaQuery);
-        const { MAX } = maxReservaResult.recordset[0];
+        // Inserir cada quarto individualmente na tabela reservas_quarto
+        for (const roomId in selectedRooms) {
+            const roomCount = selectedRooms[roomId];
+            console.log(`Quarto ID: ${roomId}, Quantidade: ${roomCount}`);
+            for (let i = 0; i < roomCount; i++) {
+                // Verificar a disponibilidade do quarto nesta data
+                const checkAvailabilityQuery = `
+                    SELECT TOP 1 Id_quarto 
+                    FROM quartos 
+                    WHERE Id_tipo = '${roomId}' 
+                    AND Id_quarto NOT IN (
+                        SELECT Id_quarto 
+                        FROM reservas_quarto 
+                        WHERE Data_inicio <= '${startDate}' AND Data_fim >= '${endDate}'
+                    )
+                `;
+                console.log("Consulta de Disponibilidade:", checkAvailabilityQuery);
+                const availabilityResult = await request.query(checkAvailabilityQuery);
 
-                // Verificar se há disponibilidade para o quarto nesta data
-                const maxidQuarto = `SELECT quartos.Id_quarto AS MAXQuarto 
-                                    FROM quartos 
-                                    LEFT JOIN reservas_quarto ON reservas_quarto.Id_quarto = quartos.Id_quarto
-                                    WHERE quartos.Id_quarto NOT IN (
-                                        SELECT Id_quarto 
-                                        FROM reservas_quarto 
-                                        WHERE Data_inicio = '${startDate}' AND Data_fim = '${endDate}'
-                                    ) AND Id_tipo = '${roomId}'
-                                    GROUP BY quartos.Id_quarto`;
-                const maxidQuartoResult = await request.query(maxidQuarto);
-                if (maxidQuartoResult.recordset.length > 0) {
-                    const { MAXQuarto } = maxidQuartoResult.recordset[0];
+                if (availabilityResult.recordset.length > 0) {
+                    const availableRoomId = availabilityResult.recordset[0].Id_quarto;
+                    console.log(`Quarto disponível encontrado. ID: ${availableRoomId}`);
 
-                    // Inserir os detalhes do quarto na tabela reservas_quarto
-                    const insertRoomQuery = `INSERT INTO reservas_quarto (Id_quarto, Id_reserva, Id_regime, Data_inicio, Data_fim) 
-                                            VALUES ('${MAXQuarto}', '${MAX}', ${idPensao}, '${startDate}', '${endDate}')`;
+                    // Inserir o quarto na tabela reservas_quarto
+                    const insertRoomQuery = `
+                        INSERT INTO reservas_quarto (Id_quarto, Id_reserva, Id_regime, Data_inicio, Data_fim) 
+                        VALUES ('${availableRoomId}', '${reservaId}', '${idPensao}', '${startDate}', '${endDate}')
+                    `;
+                    console.log("Consulta de Inserção de Quarto:", insertRoomQuery);
                     await request.query(insertRoomQuery);
                 } else {
-                    throw new Error(`Não há disponibilidade para o quarto ${roomId} nesta data.`);
+                    console.warn(`Não há disponibilidade para o quarto ${roomId} nesta data.`);
                 }
+            }
+        }
 
         res.status(201).json({ message: 'Reserva efetuada com sucesso' });
     } catch (err) {
@@ -238,6 +251,11 @@ app.get('/precos/:roomId', async (req, res) => {
         res.status(500).json({ error: 'Erro ao efetuar a reserva', message: err.message });
     }
 });
+
+
+
+
+
 
 
 app.get('/pensao/:selectedPension', async (req, res) => {
