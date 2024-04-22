@@ -76,14 +76,13 @@ function Resumo() {
     }
 
     try {
-      const roomIds = Object.keys(selectedRooms);
-      const roomId = roomIds[0];
+      const roomIds = selectedRooms ? Object.keys(selectedRooms) : [];
       const idPensao = nomepensao.find(item => item.selectedPension === selectedPension)?.id;
-
+      const totalRooms = Object.values(selectedRooms).reduce((acc, curr) => acc + curr, 0);
 
       // Insert each room individually into the database
       const insertions = [];
-      for (let i = 0; i < selectedRooms[roomId]; i++) {
+      for (let i = 0; i < totalRooms ; i++) {
         const reservation = await fetch('http://localhost:4000/addreserva', {
           method: 'POST',
           headers: {
@@ -95,7 +94,7 @@ function Resumo() {
             tlm,
             nif,
             selectedNacionalidade,
-            selectedRoom: roomId, // Pass individual roomId
+            roomIds: Object.keys(selectedRooms), // Pass individual roomId
             idPensao,
             precoTotal,
             startDate,

@@ -196,7 +196,7 @@ app.get('/precos/:roomId', async (req, res) => {
   });
 
   app.post('/addreserva', async (req, res) => {
-    const { email, nif, tlm, nome, precoTotal, startDate, endDate, totalPessoas, selectedRooms, idPensao } = req.body;
+    const { email, nif, tlm, nome, precoTotal, startDate, endDate, totalPessoas, roomIds, idPensao } = req.body;
 
     try {
         // Inserir os dados do usuário e obter o ID da reserva
@@ -208,10 +208,9 @@ app.get('/precos/:roomId', async (req, res) => {
         const request = new mssql.Request();
         const userResult = await request.query(insertUserQuery);
         const reservaId = userResult.recordset[0].Id_reserva;
-
+        
         // Inserir cada quarto individualmente na tabela reservas_quarto
-        for (const roomId in selectedRooms) {
-            const roomCount = selectedRooms[roomId];
+        for (const [roomId, roomCount] of Object.entries(roomIds)) {
             console.log(`Quarto ID: ${roomId}, Quantidade: ${roomCount}`);
             for (let i = 0; i < roomCount; i++) {
                 // Verificar a disponibilidade do quarto nesta data
@@ -251,6 +250,8 @@ app.get('/precos/:roomId', async (req, res) => {
         res.status(500).json({ error: 'Erro ao efetuar a reserva', message: err.message });
     }
 });
+
+
 
 
 
