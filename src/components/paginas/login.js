@@ -23,13 +23,14 @@ const LoginPopup = () => {
   //Se for true, mostra o formulário de edição do perfil, e mostra os dados do perfil
   const [editProfileOpen, setEditProfileOpen] = useState(false);
   const [editProfileData, setEditProfileData] = useState(null);
+  const [menuPopUp, setMenuPopUp] = useState(false);
 
   //Se for true, mostra o popup de edição do perfil
   const [popupOpen, setPopupOpen] = useState(false);
   const [selectedPopup, setSelectedPopup] = useState(null);
 
 
-  
+
   //Função que permite o login de funcionar
   const handleLogin = async () => {
     try {
@@ -40,7 +41,7 @@ const LoginPopup = () => {
       if (!response.ok) {
         throw new Error('Erro ao fazer login');
       }
-      
+
       const data = await response.json();
       console.log('Dados do usuário do banco de dados:', data[0]);
 
@@ -60,8 +61,9 @@ const LoginPopup = () => {
           setLoggedIn(true);
           localStorage.setItem('loggedIn', 'true');
           localStorage.setItem('email', email);
-         
-          
+
+
+
         } else {
           console.log('Email e/ou senha incorretos');
           alert('Password Inválida!');
@@ -83,7 +85,7 @@ const LoginPopup = () => {
           'Content-Type': 'application/json'
         }
       });
-      
+
       if (!response.ok) {
         throw new Error('Erro ao fazer registo');
       }
@@ -118,9 +120,9 @@ const LoginPopup = () => {
       const userData = await response.json();
       console.log(userData); // Verifica os dados do perfil obtidos da API
       console.log(userData); // Verifica os dados do perfil obtidos da API
-    setNome(userData.NomeCli); // Atribui o nome do usuário ao estado 'nome'
-    setTlm(userData.Telemovel); // Atribui o telefone do usuário ao estado 'tlm'
-    setNif(userData.Nif_Cli);
+      setNome(userData.NomeCli); // Atribui o nome do usuário ao estado 'nome'
+      setTlm(userData.Telemovel); // Atribui o telefone do usuário ao estado 'tlm'
+      setNif(userData.Nif_Cli);
       setEditProfileData(userData);
       setEditProfileOpen(true);
     } catch (error) {
@@ -128,7 +130,7 @@ const LoginPopup = () => {
     }
   };
 
-   //Permite editar o perfil do utilizador logado
+  //Permite editar o perfil do utilizador logado
   const handleUpdateProfile = async () => {
     try {
       const response = await fetch(`http://localhost:4000/updateprofile/${email}`, {
@@ -142,60 +144,79 @@ const LoginPopup = () => {
           Telemovel: tlm
         })
       });
-  
+
       if (!response.ok) {
         throw new Error('Erro na edição do perfil');
       }
-      else{
+      else {
         alert('Perfil editado com sucesso!');
         setPopupOpen(false);
       }
-  
+
       const userData = await response.json();
       console.log(userData); // Verifica os dados do perfil obtidos da API
-  
+
       setEditProfileData(userData);
       setEditProfileOpen(true);
     } catch (error) {
       console.error('Erro ao obter:', error);
     }
   };
-  
+
   //Código do popup de edição do perfil
   const EditProfilePopUp = () => {
     const handleSubmit = (event) => {
       event.preventDefault();
       handleUpdateProfile();
     };
-  
+
     return (
-        <div>
-          <button className="close-button" onClick={() => setPopupOpen(false)} >&times;</button>
-          <div className="header">Editar Perfil</div>
-          <br/>
-          <form onSubmit={handleSubmit}>
-            <label className='label-login'>Nome:</label>
-            <input className='input-login' type="text" value={nome} onChange={(e) => setNome(e.target.value)} />
-            <label className='label-login'>Email:</label>
-            <input className='input-login' type="email" value={email} onChange={(e) => setEmail(e.target.value)} disabled />
-            <label className='label-login'>Telemóvel:</label>
-            <input className='input-login' type="text" value={tlm} onChange={(e) => setTlm(e.target.value)} />
-            <label className='label-login'>NIF:</label>
-            <input className='input-login' type="number" value={nif} onChange={(e) => setNif(e.target.value)} />
-            <button className="editprofile-submit" type="submit">Salvar</button>
-          </form>
-        </div>
+      <div>
+        <button className="close-button" onClick={() => setPopupOpen(false)} >&times;</button>
+        <div className="header">Editar Perfil</div>
+        <br />
+        <form onSubmit={handleSubmit}>
+          <label className='label-login'>Nome:</label>
+          <input className='input-login' type="text" value={nome} onChange={(e) => setNome(e.target.value)} />
+          <label className='label-login'>Email:</label>
+          <input className='input-login' type="email" value={email} onChange={(e) => setEmail(e.target.value)} disabled />
+          <label className='label-login'>Telemóvel:</label>
+          <input className='input-login' type="text" value={tlm} onChange={(e) => setTlm(e.target.value)} />
+          <label className='label-login'>NIF:</label>
+          <input className='input-login' type="number" value={nif} onChange={(e) => setNif(e.target.value)} />
+          <button className="editprofile-submit" type="submit">Salvar</button>
+        </form>
+      </div>
     );
   };
-  
-  
-//Permite que o utilizador faça logout
+
+  const MenuPopUp = () => {
+
+
+    return (
+      <div className='ddlMenu'>
+        <table>
+          <tr>
+            <button onClick={() => openPopup("editprofile")} className='buttonedit'>Editar Perfil</button>
+          </tr>
+
+          <tr>
+            <button onClick={handleLogout} className='buttonlogout'>Logout</button>
+          </tr>
+        </table>
+      </div>
+    );
+  };
+
+
+  //Permite que o utilizador faça logout
   const handleLogout = () => {
     setLoggedIn(false);
     setEmail('');
     setPassword('');
-    localStorage.setItem('loggedIn','false');
+    localStorage.setItem('loggedIn', 'false');
     localStorage.removeItem('email');
+    window.location.reload();
   }
 
   const toggleRegister = () => {
@@ -227,64 +248,67 @@ const LoginPopup = () => {
   };
 
   return (
-    <Popup trigger={<button className={loggedIn ? 'logged-in' : 'login-button'}>{loggedIn ? `Bem-vindo ${nome}` : 'Login'}</button>} modal nested>
+    <Popup
+      trigger={<button className={loggedIn ? 'logged-in' : 'login-button'}>{loggedIn ? `Bem-vindo ${nome}` : 'Login'}</button>}
+      modal={!loggedIn}
+      nested={loggedIn}
+    >
       {(close) => (
         <div>
           {loggedIn ? (
-            <div className='ddlMenu'>
-              <button onClick={() => openPopup("editprofile")}>Editar Perfil</button>
-              <button onClick={handleLogout}>Logout</button>
-            </div>
+            <MenuPopUp className='ddlMenu' />
           ) : (
             <div className='login-geral'>
-            <div className="modal">
-              <button className="close-button" onClick={close}>&times;</button>
-              <div className="header">Login</div>
-              <br />
-              <div className="login-content" style={{ display: showRegister ? 'none' : 'block' }}>
-                <form onSubmit={handleSubmit}>
-                  <label className='label-login'>Email:</label>
-                  <input className='input-login' type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
-                  <label className='label-login'>Password:</label>
-                  <input className='input-login' type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
-                  <button className="loginsubmit" type="submit">Login</button>
-                  <button className="register-toggle" type="button" onClick={toggleRegister}>Sign Up</button>
-                </form>
+              <div className="modal">
+                <button className="close-button" onClick={close}>&times;</button>
+                <div className="header">Login</div>
+                <br />
+                <div className="login-content" style={{ display: showRegister ? 'none' : 'block' }}>
+                  <form onSubmit={handleSubmit}>
+                    <label className='label-login'>Email:</label>
+                    <input className='input-login' type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
+                    <label className='label-login'>Password:</label>
+                    <input className='input-login' type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
+                    <button className="loginsubmit" type="submit">Login</button>
+                    <button className="register-toggle" type="button" onClick={toggleRegister}>Sign Up</button>
+                  </form>
+                </div>
+                <div className="register-content" style={{ display: showRegister ? 'block' : 'none' }}>
+                  <form onSubmit={handleRegisterSubmit}>
+                    <label className='label-login'>Nome:</label>
+                    <input className='input-login' type="nome" value={nome} onChange={(e) => setNome(e.target.value)} />
+                    <label className='label-login'>Email:</label>
+                    <input className='input-login' type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
+                    <label className='label-login'>Telemóvel:</label>
+                    <input className='input-login' type="tlm" value={tlm} onChange={(e) => setTlm(e.target.value)} />
+                    <label className='label-login'>NIF:</label>
+                    <input className='input-login' type="number" value={nif} onChange={(e) => setNif(e.target.value)} />
+                    <label className='label-login'>Password:</label>
+                    <input className='input-login' type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
+                    <button className="register-toggle" type="button" onClick={toggleRegister}>Cancel</button>
+                    <button className="register-submit" type="submit">Sign Up</button>
+                  </form>
+                </div>
               </div>
-              <div className="register-content" style={{ display: showRegister ? 'block' : 'none' }}>
-                <form onSubmit={handleRegisterSubmit}>
-                  <label className='label-login'>Nome:</label>
-                  <input className='input-login' type="nome" value={nome} onChange={(e) => setNome(e.target.value)} />
-                  <label className='label-login'>Email:</label>
-                  <input className='input-login' type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
-                  <label className='label-login'>Telemóvel:</label>
-                  <input className='input-login' type="tlm" value={tlm} onChange={(e) => setTlm(e.target.value)} />
-                  <label className='label-login'>NIF:</label>
-                  <input className='input-login' type="number" value={nif} onChange={(e) => setNif(e.target.value)} />
-                  <label className='label-login'>Password:</label>
-                  <input className='input-login' type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
-                  <button className="register-toggle" type="button" onClick={toggleRegister}>Cancel</button>
-                  <button className="register-submit" type="submit">Sign Up</button>
-                </form>
-              </div>
-            </div>
             </div>
           )}
           <Popup
-            open={ popupOpen &&  selectedPopup === "editprofile"  }
+            open={popupOpen && selectedPopup === "editprofile"}
             onClose={() => setPopupOpen(false) && setEditProfileOpen(false)}
             closeOnEscape
             position="center center"
-            contentStyle={{ width: 'fit-content',
-             height: 'fit-content'
-             , padding: '20px', 
-             alignContent: 'center', 
-             display: 'block',
-              justifyContent: 'center'}}
+            contentStyle={{
+              width: 'fit-content',
+              height: 'fit-content'
+              , padding: '20px',
+              alignContent: 'center',
+              display: 'block',
+              justifyContent: 'center'
+            }}
           >
             {EditProfilePopUp()}
           </Popup>
-          </div>
+        </div>
       )}
     </Popup>
   );
