@@ -9,6 +9,7 @@ const pdf = require('html-pdf');
 
 
 
+
 // Middleware para analisar corpos de solicitação JSON
 app.use(bodyParser.json());
 
@@ -49,19 +50,21 @@ app.post('/enviar-email', (req, res) => {
 });
 
 app.post('/enviaresumo', (req, res) => {
-  const {email, nome, tlm, nif, selectedNacionalidade, selectedRooms, selectedPension, precoTotal, startDate, endDate, getRoomTitle, calculateTotalPessoas}=req.body;
-  
+  const { email, nif, tlm, nome, precoTotal, startDate, endDate, totalPessoas, roomIds, idPensao, selectedNacionalidade } = req.body;
+  const pensionTitle = idPensao === 'alojamento' ? 'Alojamento' : idPensao === 'meia-pensao' ? 'Meia Pensão' : 'Pensão Completa';
   const faturaHTML = `
-    <h2>Fatura da Reserva</h2>
-    <p><strong>Nome do Cliente:</strong> ${nome}</p>
-    <p><strong>E-mail:</strong> ${email}</p>
-    <p><strong>Telefone:</strong> ${tlm}</p>
-    <p><strong>NIF:</strong> ${nif}</p>
-    <p><strong>Nacionalidade:</strong> ${selectedNacionalidade}</p>
-    <p><strong>Data de Check-in:</strong> ${startDate}</p>
-    <p><strong>Data de Check-out:</strong> ${endDate}</p>
-    <!-- Adicione outros detalhes da fatura conforme necessário -->
-  `;
+  <h2>Fatura da Reserva</h2>
+  <p><strong>Nome do Cliente:</strong> ${nome}</p>
+  <p><strong>E-mail:</strong> ${email}</p>
+  <p><strong>Telefone:</strong> ${tlm}</p>
+  <p><strong>NIF:</strong> ${nif}</p>
+  <p><strong>Nacionalidade:</strong> ${selectedNacionalidade}</p>
+  <p><strong>Data de Check-in:</strong> ${startDate}</p>
+  <p><strong>Data de Check-out:</strong> ${endDate}</p>
+  <p><strong>Pensão:</strong> ${pensionTitle}</p>
+  <p><strong>Preço Total:</strong> ${precoTotal}</p>
+`;
+
   pdf.create(faturaHTML).toBuffer(async (err, buffer) => {
     if (err) {
       console.error('Erro ao criar PDF:', err);
@@ -110,38 +113,7 @@ app.post('/enviaresumo', (req, res) => {
 });
 });
 
-app.post('/gerarpdf', (req, res) => {
-  const {email, nome, tlm, nif, selectedNacionalidade, selectedRooms, selectedPension, precoTotal, startDate, endDate, getRoomTitle,calculateTotalPessoas} = req.body;
 
-  // Crie um novo documento PDF
-  const doc = new PDFDocument();
-  doc.fontSize(12).text(`Detalhes da Reserva:\n\n`);
-    doc.fontSize(10).text(`Nome: ${nome}\n`);
-    doc.fontSize(10).text(`Email: ${email}\n`);
-    doc.fontSize(10).text(`Telefone: ${tlm}\n`);
-    doc.fontSize(10).text(`Nacionalidade: ${selectedNacionalidade}\n`);
-    doc.fontSize(10).text(`NIF: ${nif}\n`);
-    doc.fontSize(10).text(`Check-in: ${startDate.toLocaleDateString()}\n`);
-    doc.fontSize(10).text(`Check-out: ${endDate.toLocaleDateString()}\n`);
-    doc.fontSize(10).text(`Quartos reservados:\n`);
-    Object.entries(selectedRooms).forEach(([roomId, count]) => {
-      doc.fontSize(10).text(`${count} Quarto${count > 1 ? 's' : ''} ${getRoomTitle(parseInt(roomId))}\n`);
-    });
-    doc.fontSize(10).text(`Pensão: ${nomepensao.find(item => item.selectedPension === selectedPension)?.title}\n`);
-    doc.fontSize(10).text(`Número de Pessoas: ${calculateTotalPessoas(selectedRooms, quartoNomes)}\n`);
-    doc.fontSize(10).text(`Preço total: €${precoTotal}\n`);
-  
-  // Salve o PDF em um arquivo temporário
-  const filePath = 'temp.pdf';
-  doc.pipe(fs.createWriteStream(filePath));
-  doc.end();
-
-  // Envie o arquivo PDF como resposta
-  res.download(filePath, 'reserva.pdf', () => {
-    // Remova o arquivo temporário após o download ser concluído
-    fs.unlinkSync(filePath);
-  });
-});
 
 app.listen(PORT, () => {
   console.log(`Servidor rodando em http://localhost:${PORT}`);

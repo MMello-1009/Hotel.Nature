@@ -79,6 +79,9 @@ function Resumo() {
       const roomIds = selectedRooms ? Object.keys(selectedRooms) : [];
       const idPensao = nomepensao.find(item => item.selectedPension === selectedPension)?.id;
       const totalRooms = Object.values(selectedRooms).reduce((acc, curr) => acc + curr, 0);
+      const selectedPensaoObject = nomepensao.find(item => item.selectedPension === selectedPension);
+      const nomepen = selectedPensaoObject?.id;
+      const room = Object.keys(selectedRooms);
 
       // Insert each room individually into the database
       const insertions = [];
@@ -117,7 +120,8 @@ function Resumo() {
       }
       else {
         const response = await fetch('http://localhost:3001/enviaresumo', {
-          method: 'POST',
+
+        method: 'POST',
           headers: {
             'Content-Type': 'application/json'
           },
@@ -127,8 +131,8 @@ function Resumo() {
             tlm,
             nif,
             selectedNacionalidade,
-            selectedRooms,
-            selectedPension,
+            room, // Pass individual roomId
+            nomepen,
             precoTotal,
             startDate,
             endDate,
