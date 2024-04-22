@@ -32,6 +32,11 @@ table{
     margin-top: 5px;
 }
 p{
-    margin-bottom: 10px;
+    
     text-align: center;
+}
+.footer-top{
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
 }

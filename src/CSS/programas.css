@@ -13,12 +13,12 @@
   .texto-na-imagen{
     color: white;
     position: absolute;
-    text-align: center; 
-    font-size: 50px; 
-    top: 40%;
+    text-align: center;
+    top: 50%;
     left: 50%;
     font-family: 'Belleza';
     transform: translate(-50%, -50%);
+    font-size: 4em;
   }
   .programas-titulo{
     color: #6F8854;

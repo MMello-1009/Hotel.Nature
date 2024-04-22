@@ -53,7 +53,7 @@ function Contactos() {
       </div>
       <br /><br />
       <h3 className="telefone">Email:</h3>
-      <a href="mailto:geral@realnatura.pt" style={{color:'black',fontFamily:'Belleza', textDecoration:'none'}}>geral@realnatura.pt</a>
+      <a href="mailto:geral@realnatura.pt" style={{color:'black',fontFamily:'Belleza', textDecoration:'none', marginRight:'4vw',}}>geral@realnatura.pt</a>
 
       <h3 className="telefone">Telefone:</h3>
       <p className="contactos">Tlf: +351 253 682 396 (Chamada para a rede fixa nacional)</p>

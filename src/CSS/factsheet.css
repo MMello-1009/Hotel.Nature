@@ -15,12 +15,12 @@
     height: 600px;
 }
 .texto-na-imagen{
-   color: white;
-   position: absolute;
-   text-align: center; 
-   font-size: 80px; 
-   top: 50%;
-   left: 50%;
-   font-family: 'Belleza';
-   transform: translate(-50%, -50%);
+    color: white;
+    position: absolute;
+    text-align: center;
+    top: 50%;
+    left: 50%;
+    font-family: 'Belleza';
+    transform: translate(-50%, -50%);
+    font-size: 5em;
  }
