@@ -30,48 +30,49 @@ const LoginPopup = () => {
   const [selectedPopup, setSelectedPopup] = useState(null);
 
 
-
-  //Função que permite o login de funcionar
   const handleLogin = async () => {
     try {
-      console.log('Iniciando a função handleLogin');
-
+      console.log('A iniciar a função handleLogin'); // Mensagem na consola para verificar o inicio da função
+  
+      //Solicitação HTTP para o URL de login com o email fornecido
       const response = await fetch(`http://localhost:4000/login?email=${email}`);
-
+  
+      // Verifica se a resposta da solicitação foi bem sucedida
       if (!response.ok) {
-        throw new Error('Erro ao fazer login');
+        throw new Error('Erro ao fazer login'); // Manda um erro se a resposta não for bem sucedida
       }
-
+  
+      // Converte a resposta em formato JSON
       const data = await response.json();
-      console.log('Dados do usuário do banco de dados:', data[0]);
-
+      console.log('Dados de utilizador da DB:', data[0]); // Mostra os dados do utilizador na consola
+  
+      // Verifica se o email está na Base de dados
       if (data[0] === undefined) {
-        console.log('Email não encontrado no banco de dados:', email);
-        alert('Email Inválido');
+        console.log('Email não encontrado na DB:', email);
+        alert('Email Inválido'); //Se não exibe uma mensagem de alerta
       } else {
+        // Se sim extrai o email e a pass dos dados do utilizador
         let { Email, Pass } = data[0];
-        console.log('Dados do usuário:', Email, Pass);
-
-        console.log('Email do banco de dados:', Email);
+        console.log('Dados do utilizador:', Email, Pass);
+  
+        console.log('Email DB:', Email);
         console.log('Email inserido no formulário:', email);
-
+  
+        // Verifica se o email e a pass fornecidos correspondem aos dados do utilizador
         if (email === Email && password === Pass) {
           console.log('Email e senha coincidem');
-          alert('Login Efetuado com Sucesso!');
-          setLoggedIn(true);
-          localStorage.setItem('loggedIn', 'true');
-          localStorage.setItem('email', email);
-
-
-
+          alert('Login Efetuado com Sucesso!'); //Se coincidirem mostra uma mensagem de alerta
+          setLoggedIn(true); // Atualiza o estado LoggedIn para true(Botao de Bem-Vindo/Editar/Logout)
+          localStorage.setItem('loggedIn', 'true'); //Guarda o estado "true" num armazenamento local
+          localStorage.setItem('email', email); // Guarda o email no armazenamento local
         } else {
           console.log('Email e/ou senha incorretos');
-          alert('Password Inválida!');
-          localStorage.setItem('loggedIn', 'false');
+          alert('Email e/ou senha incorretos'); //Mostra uma mensagem de Erro
+          localStorage.setItem('loggedIn', 'false'); // Armazena o estado loggedIn como falso
         }
       }
     } catch (error) {
-      console.error('Erro ao fazer login:', error);
+      console.error('Erro ao fazer login:', error); // Apanha e mostra qualquer erro que ocorra durante o processo
     }
   };
 
@@ -91,7 +92,7 @@ const LoginPopup = () => {
       }
 
       const data = await response.json();
-      console.log('Dados do usuário registado:', data);
+      console.log('Dados do usuário registados:', data);
 
     } catch (error) {
       console.error('Erro ao fazer registo:', error);
@@ -184,7 +185,7 @@ const LoginPopup = () => {
           <input className='input-login' type="text" value={tlm} onChange={(e) => setTlm(e.target.value)} />
           <label className='label-login'>NIF:</label>
           <input className='input-login' type="number" value={nif} onChange={(e) => setNif(e.target.value)} />
-          <button className="editprofile-submit" type="submit">Salvar</button>
+          <button className="btnedit-save" type="submit">Salvar</button>
         </form>
       </div>
     );
